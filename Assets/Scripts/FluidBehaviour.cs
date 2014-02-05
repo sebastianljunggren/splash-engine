@@ -6,8 +6,9 @@ public class FluidBehaviour : MonoBehaviour {
 	public List<FluidParticle> Particles;
 	private List<Vector3> ParticleRow;
 	private const float LAYER_OFFSET = 0.02f;
-	private const float GRAVITY = 0.001f;
+	private const float GRAVITY = 0.005f;
 	public int LayersInShot = 10;
+	private int ParticleCount = 0;
 
 	public FluidBehaviour() {
 		this.Particles = new List<FluidParticle>();
@@ -23,7 +24,7 @@ public class FluidBehaviour : MonoBehaviour {
 				ParticleRow.Add(new Vector3(
 					Mathf.Cos(rotation) * LAYER_OFFSET * layer,
 					Mathf.Sin(rotation) * LAYER_OFFSET * layer + 0.5f,
-					0.5f
+					0
 				));
 			}
 			particlesInLayer *= layerMultiplier;
@@ -33,6 +34,12 @@ public class FluidBehaviour : MonoBehaviour {
 	void FixedUpdate () {
 		// Remove all particles that has fallen below the level.
 		Particles.RemoveAll(p => p.Position.y < -1);
+
+		int newParticleCount = Particles.Count;
+		if (newParticleCount != ParticleCount) {
+			ParticleCount = newParticleCount;
+			Debug.Log(ParticleCount + " fluid particles." );
+		}
 
 		foreach (FluidParticle p in Particles) {
 			Vector3 newPosition = p.Position + p.Velocity;

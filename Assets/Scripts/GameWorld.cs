@@ -39,8 +39,8 @@ public class GameWorld : MonoBehaviour {
 		int[] previous = new int[nodes.Length];
 
 		for (int v=0; v<nodes.Length; v++) {
-			dist [v] = float.MaxValue;
-			previous [v] = -1;
+			dist[v] = float.MaxValue;
+			previous[v] = -1;
 		}
 
 		dist[sourceIndex] = 0;
@@ -53,7 +53,7 @@ public class GameWorld : MonoBehaviour {
 		while (Q.Count > 0) {
 			int u = Q[0];
 			for (int i=0; i<Q.Count; i++) {
-				if (dist[Q[i]] < dist[u]) u = i;
+				if (dist[Q[i]] < dist[u]) u = Q[i];
 			}
 			Q.Remove(u);
 
@@ -140,7 +140,7 @@ public class GameWorld : MonoBehaviour {
 				}
 			}
 
-			Debug.DrawLine (first.transform.position, second.transform.position, Color.red, 10);
+			Debug.DrawLine (first.transform.position, second.transform.position, Color.red, 100);
 		}
 
 		public float GetCost() {

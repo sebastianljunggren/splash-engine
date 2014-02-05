@@ -7,18 +7,19 @@ public class FluidBehaviour : MonoBehaviour {
 	private List<Vector3> ParticleRow;
 	private const float LAYER_OFFSET = 0.02f;
 	private const float GRAVITY = 0.005f;
-	public int LayersInShot = 10;
+	private const int LAYERS_IN_SHOT = 5;
+	private const int CIRCLES_IN_SHOT = 4;
+	private const float ENERGY_LOSS_ON_BOUNCE = 0.2f;
 	private int ParticleCount = 0;
 
 	public FluidBehaviour() {
 		this.Particles = new List<FluidParticle>();
-		int layerCount = 4;
 		int layerMultiplier = 3;
 		int particlesInLayer = 1;
 		ParticleRow = new List<Vector3>();
 		particlesInLayer = 1;
 		int particle = 0;
-		for (int layer = 0; layer < layerCount; layer++) {
+		for (int layer = 0; layer < CIRCLES_IN_SHOT; layer++) {
 			for (int i = 0; i < particlesInLayer; i++, particle++) {
 				float rotation = (2 * Mathf.PI / particlesInLayer) * i;
 				ParticleRow.Add(new Vector3(
@@ -41,18 +42,23 @@ public class FluidBehaviour : MonoBehaviour {
 			Debug.Log(ParticleCount + " fluid particles." );
 		}
 
+		// Update the positions of the particles
 		foreach (FluidParticle p in Particles) {
+			// Apply gravity
+			p.Velocity.y -= GRAVITY;
+
 			Vector3 newPosition = p.Position + p.Velocity;
 			if (Physics.Linecast(p.Position, newPosition)) {
 				RaycastHit hit = new RaycastHit();
 				if (Physics.Raycast(p.Position, p.Velocity, out hit)) {
-					p.Velocity = Vector3.Reflect(p.Velocity, hit.normal);
+					if (hit.normal.y != 0) {
+						p.Velocity.y += GRAVITY;
+					}
+					p.Velocity = Vector3.Reflect(p.Velocity * ENERGY_LOSS_ON_BOUNCE, hit.normal);
 				}
 				newPosition = p.Position + p.Velocity;
 			}
 			p.Position = newPosition;
-			// Apply gravity
-			p.Velocity.y -= GRAVITY;
 		}
 	}
 
@@ -64,11 +70,11 @@ public class FluidBehaviour : MonoBehaviour {
 	}
 
 	public void ShootFluid (Transform transform) {
-		for (int i = 0; i < LayersInShot; i++) {
+		for (int i = 0; i < LAYERS_IN_SHOT; i++) {
 			foreach(Vector3 v in ParticleRow) {
 				FluidParticle p = new FluidParticle(
 					transform.TransformPoint(v + new Vector3(0, 0 , LAYER_OFFSET * i)),
-					transform.forward / 8);
+					transform.forward / 2);
 				Particles.Add(p);
 			}
 		}

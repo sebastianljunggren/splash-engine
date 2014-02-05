@@ -6,7 +6,7 @@ public class FluidBehaviour : MonoBehaviour {
 	public List<FluidParticle> Particles;
 	private List<Vector3> ParticleRow;
 	private const float LAYER_OFFSET = 0.02f;
-	private const float GRAVITY = 0.005f;
+	private const float GRAVITY = 0.001f;
 	public int LayersInShot = 10;
 
 	public FluidBehaviour() {
@@ -32,10 +32,18 @@ public class FluidBehaviour : MonoBehaviour {
 
 	void FixedUpdate () {
 		// Remove all particles that has fallen below the level.
-		Particles.RemoveAll(p => p.Position.y < 0);
-		// TODO: apply gravity and update positions based on speed.
+		Particles.RemoveAll(p => p.Position.y < -1);
+
 		foreach (FluidParticle p in Particles) {
-			p.Position = p.Position + p.Velocity;
+			Vector3 newPosition = p.Position + p.Velocity;
+			if (Physics.Linecast(p.Position, newPosition)) {
+				RaycastHit hit = new RaycastHit();
+				if (Physics.Raycast(p.Position, p.Velocity, out hit)) {
+					p.Velocity = Vector3.Reflect(p.Velocity, hit.normal);
+				}
+				newPosition = p.Position + p.Velocity;
+			}
+			p.Position = newPosition;
 			// Apply gravity
 			p.Velocity.y -= GRAVITY;
 		}
@@ -53,7 +61,7 @@ public class FluidBehaviour : MonoBehaviour {
 			foreach(Vector3 v in ParticleRow) {
 				FluidParticle p = new FluidParticle(
 					transform.TransformPoint(v + new Vector3(0, 0 , LAYER_OFFSET * i)),
-					transform.forward / 2);
+					transform.forward / 8);
 				Particles.Add(p);
 			}
 		}

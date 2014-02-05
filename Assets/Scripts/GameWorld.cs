@@ -12,6 +12,7 @@ public class GameWorld : MonoBehaviour {
 	void Start () {
 		foreach (var edge in edges) {
 			edge.Calculate(nodes);
+
 		}
 	}
 
@@ -76,6 +77,7 @@ public class GameWorld : MonoBehaviour {
 			int[] theRest = new int[Q.Count];
 			Q.CopyTo(theRest, 0);
 			List<WaypointEdge> neighbours = GetNeighbours(u, theRest);
+            
 			for (int j=0; j<neighbours.Count; j++) {
 				WaypointEdge e = neighbours[j];
 				int neighbour = (e.GetFirst() == u ? e.GetSecond() : e.GetFirst());
@@ -95,14 +97,18 @@ public class GameWorld : MonoBehaviour {
 
 		List<WaypointEdge> neighbours = new List<WaypointEdge>();
 
+
 		for (int i=0; i<edges.Length; i++) {
 			int theOther = 0;
 			if (edges[i].GetFirst() == current) {
 				theOther = edges[i].GetSecond();
 			}
-			else if (edges[i].GetSecond() == current) {
-				theOther = edges[i].GetFirst();
-			}
+            else if (edges[i].GetSecond() == current) {
+                theOther = edges[i].GetFirst();
+            }
+            else {
+                continue;
+            }
 			// Is theOther in theRest
 			bool ok = false;
 			for (int v=0; v<theRest.Length; v++) {
@@ -129,6 +135,7 @@ public class GameWorld : MonoBehaviour {
 
 		public void Calculate(WaypointNode[] nodes) {
 			cost = (second.transform.position - first.transform.position).magnitude;
+            
 			for (int i=0; i<nodes.Length; i++) {
 				float dist = Vector3.Distance(first.transform.position, nodes[i].transform.position);
 				if (dist < accuracy) {
@@ -139,8 +146,8 @@ public class GameWorld : MonoBehaviour {
 					secondIndex = i;
 				}
 			}
-
 			Debug.DrawLine (first.transform.position, second.transform.position, Color.red, 100);
+            
 		}
 
 		public float GetCost() {

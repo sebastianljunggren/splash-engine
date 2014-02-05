@@ -2,23 +2,41 @@
 using System.Collections;
 
 public class FireCell {
-    private Vector3 position;
-    private int radius;
+    public Vector3 position;
+    public int radius;
+
     private bool active;
 
-    public int hp = 50;  
+    private bool isBurning = false;
+    public int hp = 50;
 
     public FireCell(bool active = true) {
         this.active = active;
+
+        FireSpread.TakeDamage += damaged;
     }
 
-    public bool isBurning() {
-        return hp <= 0;
-    }
-
-    public void damage(int damage) {
-        if (hp > 0) {
+    public void damaged(Vector3 position, int radius, int damage) {
+        if (!isBurning) {
             hp -= damage;
+
+            isBurning = hp <= 0;
+
+            if (isBurning) {
+                startFire();
+            }
         }
+    }
+
+    public void startFire() {
+        hp = 0;
+        isBurning = true;
+
+        FireSpread.OnFire += burning;
+        FireSpread.TakeDamage -= damaged;
+    }
+
+    public void burning() {
+        FireSpread.fireAt(position, radius);
     }
 }

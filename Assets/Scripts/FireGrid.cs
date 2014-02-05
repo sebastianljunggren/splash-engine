@@ -4,8 +4,6 @@ using System.Collections;
 public class FireGrid {
     private FireCell[,] grid;
 
-    //public Vector3 position;
-
     private int cellSize = 1;
     public int x;
     public int y;
@@ -13,7 +11,6 @@ public class FireGrid {
     public FireGrid(float x, float y, Vector3 position){
         this.x = (int) x / cellSize;
         this.y = (int) y / cellSize;
-        //this.position = position;
 
         grid = new FireCell[this.x, this.y];
 

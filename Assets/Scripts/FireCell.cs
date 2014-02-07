@@ -5,18 +5,20 @@ public class FireCell {
     public Vector3 position;
     public int radius;
 
-    private bool active;
+    private bool active = true;
 
     private bool isBurning = false;
     public int hp = 50;
 
-    public FireCell(bool active = true) {
-        this.active = active;
+    public FireCell() {
 
-        FireSpread.TakeDamage += damaged;
     }
 
-    public void damaged(Vector3 position, int radius, int damage) {
+    public bool hitBy(Vector3 position, int radius) {
+        return true;
+    }
+
+    public void damage(int damage) {
         if (!isBurning) {
             hp -= damage;
 
@@ -32,11 +34,10 @@ public class FireCell {
         hp = 0;
         isBurning = true;
 
-        FireSpread.OnFire += burning;
-        FireSpread.TakeDamage -= damaged;
+        FireEventManager.OnFire += burning;
     }
 
     public void burning() {
-        FireSpread.fireAt(position, radius);
+        FireEventManager.fireAt(position, radius);
     }
 }

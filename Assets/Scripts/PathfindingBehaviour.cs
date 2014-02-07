@@ -16,7 +16,8 @@ public class PathfindingBehaviour : MonoBehaviour {
 	void Start () {
 		cachedTransform = transform;
 
-		currentWaypoints = gameWorld.ShortestPath(new Vector3(4f, 1f, -8f), new Vector3(10f, 1f, 12f));
+		currentWaypoints = gameWorld.ShortestPath(cachedTransform.position, GameObject.Find("Node6").transform.position);
+        Debug.Log(currentWaypoints[0].transform.position);
 
 		waypointIndex = 0;
 		MoveTo(currentWaypoints[waypointIndex].transform.position);
@@ -28,17 +29,21 @@ public class PathfindingBehaviour : MonoBehaviour {
 
 		Vector3 distance = waypointTarget - cachedTransform.position;
 		if (distance.magnitude > 0.5) {
-			distance.Normalize ();
+			distance.Normalize();
 
-			cachedTransform.rotation = Quaternion.Slerp (cachedTransform.rotation,
+			cachedTransform.rotation = Quaternion.Slerp(cachedTransform.rotation,
 			                                             Quaternion.LookRotation(distance), rotationSpeed * Time.deltaTime);
-			
-			cachedTransform.position += cachedTransform.forward * speed * Time.deltaTime;
+
+            Vector3 moveDirection = new Vector3(0, 0, 1);
+            moveDirection = cachedTransform.TransformDirection(moveDirection) * speed;
+            Debug.Log(moveDirection);
+
+			GetComponent<CharacterController>().Move(moveDirection * Time.deltaTime);
 		}
-		else if (waypointIndex < currentWaypoints.Length - 1) {
-			waypointIndex++;
-			MoveTo (currentWaypoints[waypointIndex].transform.position);
-		}
+        else if (waypointIndex < currentWaypoints.Length - 1) {
+            waypointIndex++;
+            MoveTo(currentWaypoints[waypointIndex].transform.position);
+        }
 	}
 
 	void MoveTo(Vector3 waypoint) {

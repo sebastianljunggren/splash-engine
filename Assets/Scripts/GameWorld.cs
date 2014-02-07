@@ -146,7 +146,7 @@ public class GameWorld : MonoBehaviour {
 					secondIndex = i;
 				}
 			}
-			Debug.DrawLine (first.transform.position, second.transform.position, Color.red, 100);
+			Debug.DrawLine (first.transform.position, second.transform.position, Color.red, 1000);
             
 		}
 

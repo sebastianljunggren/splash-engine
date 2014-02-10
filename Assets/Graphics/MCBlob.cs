@@ -477,8 +477,8 @@ public class MCBlob: MonoBehaviour {
 	//Unity and Sample specific
 	void Update () {
 
-        blobs[0][0] = -.125f - .125f * (float)Mathf.Cos((float)Time.time * 2f);
-        blobs[1][0] = .125f + .125f * (float)Mathf.Cos((float)Time.time * 2f);
+        //blobs[0][0] = -.125f - .125f * (float)Mathf.Cos((float)Time.time * 2f);
+		//blobs[1][0] = .125f + .125f * (float)Mathf.Cos((float)Time.time * 2f);
 
         //blobs[0][0]=.12f+.12f*(float)Mathf.Sin((float)Time.time*.50f);
         //blobs[0][2]=.06f+.23f*(float)Mathf.Cos((float)Time.time*.2f);
@@ -496,8 +496,8 @@ public class MCBlob: MonoBehaviour {
 		lt=0f;
 		blobs = new float[2][];
 
-        blobs[0]=new float[]{0,0,0,.3f};
-        blobs[1]=new float[]{0,0,0,.2f};
+        blobs[0]=new float[]{-.25f,0,0,.3f};
+		blobs[1]=new float[]{.25f,0,0,.2f};
         //blobs[2]=new float[]{-.18f,.125f,-.25f,.16f};
         //blobs[3]=new float[]{-.13f,.23f,.255f,.13f};		
         //blobs[4]=new float[]{-.18f,.125f,.35f,.12f};

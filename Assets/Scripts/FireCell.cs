@@ -23,6 +23,7 @@ public class FireCell : MonoBehaviour {
             isBurning = hp <= 0;
 
             if (isBurning) {
+                Debug.Log("New cell on fire");
                 StartFire();
             }
         }
@@ -42,41 +43,32 @@ public class FireCell : MonoBehaviour {
     public void Burning() {
         Collider[] closeObjects = Physics.OverlapSphere(transform.position, 1.1f);
 
-        Debug.Log(closeObjects.Length);
-
         foreach (Collider obj in closeObjects) {
-            obj.GetComponent<FireCell>().Damage(10);
+            if (obj.collider != transform.collider) {
+                obj.GetComponent<FireCell>().Damage(20);
+            }
         }
 
         //FireEventManager.FireAt(transform.position, radius);
     }
 
-    public void RedrawGizmos() {
-        //OnDrawGizmos();
-    }
-
     void OnDrawGizmos() {
         if (isBurning) {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, 1.1f);
+            //Gizmos.DrawWireSphere(transform.position, 1.1f);
         }
 
         if (hp < 50 && hp != 0) {
-            Gizmos.color = Color.green;
+            //Gizmos.color = Color.green;
         }
 
-        Gizmos.DrawWireCube(transform.position, new Vector3(1f, 1f, 1f));
+        //Gizmos.DrawWireCube(transform.position, new Vector3(1f, 1f, 1f));
         Gizmos.color = Color.white;
     }
 
-    private bool foo = false;
-
     void OnDrawGizmosSelected() {
-        if (isBurning && !foo) {
-            Burning();
-            foo = true;
+        if (isBurning) {
+            //Burning();
         }
-
-        //Debug.Log(transform.position);
     }
 }

@@ -23,8 +23,8 @@ public class Flammable : MonoBehaviour {
 
         Vector3 size = renderer.bounds.size;
 
-        for (int y = 0; y < 5; y++) {
-            for (int x = 0; x < 5; x++) {
+        for (int y = 0; y < 50; y++) {
+            for (int x = 0; x < 50; x++) {
                 Vector3 pos = new Vector3(x, 0, y);
                 FireCell cell = (FireCell)Instantiate(fireCell, pos, Quaternion.identity);
                 cell.AddParentReference(this);
@@ -36,18 +36,21 @@ public class Flammable : MonoBehaviour {
             }
         }
 
+        Vector3 foo = new Vector3(2, 1, 2);
+        FireCell bar = (FireCell)Instantiate(fireCell, foo, Quaternion.identity);
+        bar.AddParentReference(this);
+
         //InvokeRepeating("GridOutput", 0f, 2.5f);
-        //InvokeRepeating("UpdateSpread", 0f, 2.0f);
+        InvokeRepeating("UpdateSpread", 0f, 2.0f);
     }
 
 	void Update () {
-        foreach (FireCell cell in fireGrid) {
-            cell.RedrawGizmos();
-        }
+
 	}
 
     void UpdateSpread() {
         //FireEventManager.spreadFire();
+        Debug.Log("UpdateSpread");
         if (OnFire != null) {
             OnFire();
         }

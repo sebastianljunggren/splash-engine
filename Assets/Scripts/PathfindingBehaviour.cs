@@ -3,6 +3,8 @@ using System.Collections;
 
 using WaypointGeneration;
 
+public delegate void TargetReachedEvent(object source, string arg);
+
 public class PathfindingBehaviour : MonoBehaviour {
 
 	public float speed;
@@ -13,6 +15,9 @@ public class PathfindingBehaviour : MonoBehaviour {
 	private Vector3 waypointTarget;
 	private int waypointIndex;
 	private Transform cachedTransform;
+    private string targetName;
+
+    public event TargetReachedEvent TargetReached;
 
 	// Use this for initialization
 	void Start () {
@@ -53,9 +58,13 @@ public class PathfindingBehaviour : MonoBehaviour {
             waypointIndex++;
             MoveTo(currentWaypoints[waypointIndex].position);
         }
+        else {
+            TargetReached(this, targetName);
+        }
 	}
 
-    void StartJourney(string objectName) {
+    public void StartJourney(string objectName) {
+        this.targetName = objectName;
         currentWaypoints = gameWorld.ShortestPath(cachedTransform.position, GameObject.Find(objectName).transform.position);
 
         if (currentWaypoints.Length > 0) {

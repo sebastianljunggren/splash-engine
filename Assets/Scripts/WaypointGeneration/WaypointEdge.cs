@@ -14,36 +14,33 @@ namespace WaypointGeneration {
         public WaypointEdge(WaypointNode f, WaypointNode s) {
             first = f;
             second = s;
-            //Calculate();
         }
 
-        //public void Calculate(WaypointNode[] nodes) {
-        //    cost = (second.transform.position - first.transform.position).magnitude;
+        public void Calculate(WaypointNode[] nodes) {
+            cost = (second.position - first.position).magnitude;
 
-        //    for (int i = 0; i < nodes.Length; i++) {
-        //        float dist = Vector3.Distance(first.transform.position, nodes[i].transform.position);
-        //        if (dist < accuracy) {
-        //            firstIndex = i;
-        //        }
-        //        dist = Vector3.Distance(second.transform.position, nodes[i].transform.position);
-        //        if (dist < accuracy) {
-        //            secondIndex = i;
-        //        }
-        //    }
-        //    Debug.DrawLine(first.transform.position, second.transform.position, Color.red, 1000);
-
-        //}
-
-        public float GetCost() {
-            return cost;
+            for (int i = 0; i < nodes.Length; i++) {
+                float dist = Vector3.Distance(first.position, nodes[i].position);
+                if (dist < accuracy) {
+                    firstIndex = i;
+                }
+                dist = Vector3.Distance(second.position, nodes[i].position);
+                if (dist < accuracy) {
+                    secondIndex = i;
+                }
+            }
         }
 
-        public int GetFirst() {
-            return firstIndex;
+        public float Cost {
+            get { return cost; }
         }
 
-        public int GetSecond() {
-            return secondIndex;
+        public int FirstIndex {
+            get { return firstIndex; }
+        }
+
+        public int SecondIndex {
+            get { return secondIndex; }
         }
     }
 

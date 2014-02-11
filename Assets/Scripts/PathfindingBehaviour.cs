@@ -19,22 +19,22 @@ public class PathfindingBehaviour : MonoBehaviour {
 		cachedTransform = transform;
 
         waypointTarget = cachedTransform.position;
-        StartJourney("Node1");
+        StartJourney("Room1");
 	}
 	
 	// Update is called once per frame
 	void Update () {
         if (Input.GetKey(KeyCode.Alpha1)) {
-            StartJourney("Node1");
+            StartJourney("Room1");
         }
         if (Input.GetKey(KeyCode.Alpha2)) {
-            StartJourney("Node3");
+            StartJourney("Room2");
         }
         if (Input.GetKey(KeyCode.Alpha3)) {
-            StartJourney("Node5");
+            StartJourney("Room3");
         }
         if (Input.GetKey(KeyCode.Alpha4)) {
-            StartJourney("Node8");
+            StartJourney("Room4");
         }
 
 		Vector3 distance = waypointTarget - cachedTransform.position;
@@ -49,19 +49,19 @@ public class PathfindingBehaviour : MonoBehaviour {
 
 			GetComponent<CharacterController>().Move(moveDirection * Time.deltaTime);
 		}
-        //else if (waypointIndex < currentWaypoints.Length - 1) {
-        //    waypointIndex++;
-        //    //MoveTo(currentWaypoints[waypointIndex].transform.position);
-        //}
+        else if (waypointIndex < currentWaypoints.Length - 1) {
+            waypointIndex++;
+            MoveTo(currentWaypoints[waypointIndex].position);
+        }
 	}
 
     void StartJourney(string objectName) {
-        //currentWaypoints = gameWorld.ShortestPath(cachedTransform.position, GameObject.Find(objectName).transform.position);
+        currentWaypoints = gameWorld.ShortestPath(cachedTransform.position, GameObject.Find(objectName).transform.position);
 
-        //if (currentWaypoints.Length > 0) {
+        if (currentWaypoints.Length > 0) {
             waypointIndex = 0;
-            //MoveTo(currentWaypoints[waypointIndex].transform.position);
-        //}
+            MoveTo(currentWaypoints[waypointIndex].position);
+        }
     }
 
 	void MoveTo(Vector3 waypoint) {

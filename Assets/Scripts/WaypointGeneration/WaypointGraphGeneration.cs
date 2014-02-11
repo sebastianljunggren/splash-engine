@@ -9,7 +9,8 @@ namespace WaypointGeneration {
         //private List<WaypointNode> nodes;
         private List<WaypointEdge> edges;
         private WaypointNode[,] grid;
-        public int gridSize;
+        public int gridSizeX;
+        public int gridSizeZ;
         public int cellSize;
         public int range;
         public Vector3 gridOffset;
@@ -19,20 +20,20 @@ namespace WaypointGeneration {
         public WaypointGraph GenerateGraph() {
             Debug.Log("Generating graph...");
 
-            grid = new WaypointNode[gridSize, gridSize];
+            grid = new WaypointNode[gridSizeX, gridSizeZ];
             List<WaypointNode> nodes = new List<WaypointNode>();
             edges = new List<WaypointEdge>();
 
-            for (int i = 0; i < gridSize; i++) {
-                for (int j = 0; j < gridSize; j++) {
+            for (int i = 0; i < gridSizeX; i++) {
+                for (int j = 0; j < gridSizeZ; j++) {
                     WaypointNode node = new WaypointNode(new Vector3(gridOffset.x + i * cellSize, gridOffset.y, gridOffset.z + j * cellSize));
                     grid[i, j] = node;
                     nodes.Add(node);
                 }
             }
 
-            for (int i = 0; i < gridSize; i++) {
-                for (int j = 0; j < gridSize; j++) {
+            for (int i = 0; i < gridSizeX; i++) {
+                for (int j = 0; j < gridSizeZ; j++) {
 
                     CheckNeighbours(i, j);
 
@@ -53,22 +54,36 @@ namespace WaypointGeneration {
         void CheckNeighbours(int x, int y) {
             for (int a = -range; a <= range; a++) {
                 for (int b = -range; b <= range; b++) {
-                    if (x + a >= 0 && y + b >= 0 && x + a < gridSize && y + b < gridSize) {
-                        RaycastHit hit;
+                    if (x + a >= 0 && y + b >= 0 && x + a < gridSizeX && y + b < gridSizeZ) {
                         WaypointNode current = grid[x, y];
                         WaypointNode target = grid[x + a, y + b];
-                        Vector3 direction = target.position - current.position;
-                        if (Physics.Raycast(current.position, direction, out hit, 100.0F)) {
-                            float distance = hit.distance;
-                            if (distance > direction.magnitude) {
-                                edges.Add(new WaypointEdge(current, target));
-                            }
+                        float halfWidth = .4f;
+
+                        Vector3 perp = Vector3.Cross(current.position - target.position, Vector3.up);
+                        perp.Normalize();
+                        if (IsRaycastColliding(current.position + perp * halfWidth, target.position + perp * halfWidth)
+                                && IsRaycastColliding(current.position, target.position)
+                                && IsRaycastColliding(current.position - perp * halfWidth, target.position - perp * halfWidth)) {
+                            edges.Add(new WaypointEdge(current, target));
                         }
+
                     }
                 }
             }
         }
 
+        bool IsRaycastColliding(Vector3 current, Vector3 target) {
+            RaycastHit hit;
+            
+            Vector3 direction = target - current;
+            if (Physics.Raycast(current, direction, out hit, 100.0F, ~(1 << 8))) {
+                float distance = hit.distance;
+                if (distance >= direction.magnitude) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
 }

@@ -147,6 +147,14 @@ Prefab:
       propertyPath: speed
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: dd1a6ee538e39b742aea65822c0709b1, type: 2}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: dd1a6ee538e39b742aea65822c0709b1, type: 2}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6500000, guid: dd1a6ee538e39b742aea65822c0709b1, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: dd1a6ee538e39b742aea65822c0709b1, type: 2}
@@ -208,9 +216,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3334c7d8240cea7498dc9933c963b117, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSize: 15
-  cellSize: 1
-  range: 3
+  gridSizeX: 10
+  gridSizeZ: 13
+  cellSize: 2
+  range: 5
   gridOffset: {x: -8, y: 1, z: -8}
 --- !u!1 &585006304
 GameObject:
@@ -467,7 +476,7 @@ GameObject:
   - 4: {fileID: 1217535257}
   - 33: {fileID: 1217535256}
   - 23: {fileID: 1217535254}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -643,7 +652,7 @@ GameObject:
   - 143: {fileID: 1627398416}
   - 114: {fileID: 1627398415}
   - 114: {fileID: 1627398414}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Agent
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -59,6 +59,10 @@ public class PathfindingBehaviour : MonoBehaviour {
         currentWaypoints = gameWorld.ShortestPath(cachedTransform.position, GameObject.Find(objectName).transform.position);
 
         if (currentWaypoints.Length > 0) {
+            for (int i = 0; i < currentWaypoints.Length - 1; i++) {
+                Debug.DrawLine(currentWaypoints[i].position, currentWaypoints[i + 1].position, Color.red, 5);
+            }
+
             waypointIndex = 0;
             MoveTo(currentWaypoints[waypointIndex].position);
         }

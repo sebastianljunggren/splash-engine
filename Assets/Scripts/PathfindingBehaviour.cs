@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+using WaypointGeneration;
+
 public class PathfindingBehaviour : MonoBehaviour {
 
 	public float speed;
@@ -47,19 +49,19 @@ public class PathfindingBehaviour : MonoBehaviour {
 
 			GetComponent<CharacterController>().Move(moveDirection * Time.deltaTime);
 		}
-        else if (waypointIndex < currentWaypoints.Length - 1) {
-            waypointIndex++;
-            MoveTo(currentWaypoints[waypointIndex].transform.position);
-        }
+        //else if (waypointIndex < currentWaypoints.Length - 1) {
+        //    waypointIndex++;
+        //    //MoveTo(currentWaypoints[waypointIndex].transform.position);
+        //}
 	}
 
     void StartJourney(string objectName) {
-        currentWaypoints = gameWorld.ShortestPath(cachedTransform.position, GameObject.Find(objectName).transform.position);
+        //currentWaypoints = gameWorld.ShortestPath(cachedTransform.position, GameObject.Find(objectName).transform.position);
 
-        if (currentWaypoints.Length > 0) {
+        //if (currentWaypoints.Length > 0) {
             waypointIndex = 0;
-            MoveTo(currentWaypoints[waypointIndex].transform.position);
-        }
+            //MoveTo(currentWaypoints[waypointIndex].transform.position);
+        //}
     }
 
 	void MoveTo(Vector3 waypoint) {

@@ -4,32 +4,56 @@ using System.Collections.Generic;
 
 public class Flammable : MonoBehaviour {
     private List<FireCell> fireGrid = new List<FireCell>();
+    public FireCell fireCell;
 
-	void Start () {
-        FireEventManager.FireSpread += respondToFire;
+    public delegate void OnFireEvent();
+    public event OnFireEvent OnFire;
 
-        for (int i = 0; i < 100; i++) {
-            FireCell foo = new FireCell();
-            fireGrid.Add(foo);
+    void Start() {
+        FireEventManager.FireSpread += RespondToFire;
 
-            if (i == 50) {
-                foo.startFire();
+        //for (int i = 0; i < 100; i++) {
+        //    FireCell foo = new FireCell();
+        //    fireGrid.Add(foo);
+
+        //    if (i == 50) {
+        //        foo.startFire();
+        //    }
+        //}
+
+        Vector3 size = renderer.bounds.size;
+
+        for (int y = 0; y < 5; y++) {
+            for (int x = 0; x < 5; x++) {
+                Vector3 pos = new Vector3(x, 0, y);
+                FireCell cell = (FireCell)Instantiate(fireCell, pos, Quaternion.identity);
+                cell.AddParentReference(this);
+                fireGrid.Add(cell);
+
+                if (y == 2 && x == 2) {
+                    cell.StartFire();
+                }
             }
         }
 
-        InvokeRepeating("gridOutput", 0f, 2.5f);
-        InvokeRepeating("UpdateSpread", 0f, 2.0f);
-	}
+        //InvokeRepeating("GridOutput", 0f, 2.5f);
+        //InvokeRepeating("UpdateSpread", 0f, 2.0f);
+    }
 
 	void Update () {
-
+        foreach (FireCell cell in fireGrid) {
+            cell.RedrawGizmos();
+        }
 	}
 
     void UpdateSpread() {
-        FireEventManager.spreadFire();
+        //FireEventManager.spreadFire();
+        if (OnFire != null) {
+            OnFire();
+        }
     }
 
-    public void respondToFire(Vector3 position, int radius, int damage) {
+    public void RespondToFire(Vector3 position, float radius, int damage) {
         if (true) { //Collide with object?
             if (fireGrid.Count == 0) {
                 //for (int i = 0; i < 100; i++) {
@@ -37,20 +61,20 @@ public class Flammable : MonoBehaviour {
                 //}
             }
             else {
-                damageCellAt(position, radius, damage);
+                DamageCellAt(position, radius, damage);
             }
         }
     }
 
-    private void damageCellAt(Vector3 position, int radius, int damage) {
-        foreach (FireCell cell in fireGrid) {
-            if(cell.hitBy(position, radius)) {
-                cell.damage(damage);
-            }
-        }
+    private void DamageCellAt(Vector3 position, float radius, int damage) {
+        //foreach (FireCell cell in fireGrid) {
+        //    if(cell.HitBy(position, radius)) {
+        //        cell.Damage(damage);
+        //    }
+        //}
     }
 
-    private void gridOutput() {
+    private void GridOutput() {
         string foo = "";
         int i = 0;
 

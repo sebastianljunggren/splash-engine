@@ -14,7 +14,7 @@ public class FluidBehaviour : MonoBehaviour {
 	private const float ENERGY_LOSS_ON_BOUNCE = 0.01f;
     private const int SOLVER_ITERATIONS = 4;
     private const float REST_DENSITY = 50f / NEIGHBOUR_DISTANCE;
-    private const float RELAXATION_CONSTANT = 0.75f;
+    private const float RELAXATION_CONSTANT = 0.1f;
 	private int ParticleCount = 0;
 
 	public FluidBehaviour() {
@@ -182,15 +182,15 @@ public class FluidBehaviour : MonoBehaviour {
 	}
 
 	public void ShootFluid (Transform transform) {
-		//for (int i = 0; i < LAYERS_IN_SHOT; i++) {
-			//foreach(Vector3 v in ParticleRow) {
-                Vector3 v = ParticleRow[0];
-                int i = 0;
-				FluidParticle p = new FluidParticle(
+		for (int i = 0; i < LAYERS_IN_SHOT; i++) {
+			foreach(Vector3 v in ParticleRow) {
+                //Vector3 v = ParticleRow[0];
+                //int i = 0;
+                FluidParticle p = new FluidParticle(
 					transform.TransformPoint(v + new Vector3(0, 0 , LAYER_OFFSET * i)),
 					transform.forward / 2);
 				NewParticles.Add(p);
-			//}
-		//}
+			}
+		}
 	}
 }

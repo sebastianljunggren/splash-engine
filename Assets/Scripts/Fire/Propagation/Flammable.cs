@@ -18,7 +18,7 @@ public class Flammable : MonoBehaviour {
     public int cellToIgnite = 251;
 
     void Start() {
-        Bounds meshBounds = GetComponent<MeshCollider>().bounds;
+        Bounds meshBounds = transform.collider.bounds;
         Vector3 min = meshBounds.min;
         Vector3 max = meshBounds.max;
 

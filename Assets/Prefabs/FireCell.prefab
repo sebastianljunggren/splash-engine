@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   active: 1
-  firePrefab: {fileID: 11400000, guid: f588ab2cf9f4741438761a465f01a090, type: 2}
+  firePrefab: {fileID: 11400000, guid: 1aab87bf8091e2044976e68842e31bd8, type: 2}
   hp: 50
 --- !u!1001 &100100000
 Prefab:

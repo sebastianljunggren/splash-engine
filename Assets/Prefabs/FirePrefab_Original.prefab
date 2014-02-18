@@ -64,7 +64,7 @@ GameObject:
   - 4: {fileID: 400006}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: FirePrefab
+  m_Name: FirePrefab_Original
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -246,9 +246,9 @@ EllipsoidParticleEmitter:
   minSize: .239999995
   maxSize: .569999993
   minEnergy: 1.39999998
-  maxEnergy: 7
-  minEmission: 50
-  maxEmission: 50
+  maxEnergy: 4
+  minEmission: 30
+  maxEmission: 30
   worldVelocity: {x: 0, y: 0, z: 0}
   localVelocity: {x: 0, y: 0, z: 0}
   rndVelocity: {x: 0, y: 0, z: 0}

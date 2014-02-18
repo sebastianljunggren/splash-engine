@@ -6,14 +6,15 @@ public class FluidBehaviour : MonoBehaviour {
 	public List<FluidParticle> Particles;
     public List<FluidParticle> NewParticles;
 	private List<Vector3> ParticleRow;
-	private const float LAYER_OFFSET = 1f;
+	private const float LAYER_OFFSET = 0.5f;
 	private const float GRAVITY = 0.005f;
 	private const int LAYERS_IN_SHOT = 5;
 	private const int CIRCLES_IN_SHOT = 3;
-    private const float NEIGHBOUR_DISTANCE = LAYER_OFFSET * 2;
-	private const float ENERGY_LOSS_ON_BOUNCE = 0.2f;
+    private const float NEIGHBOUR_DISTANCE = LAYER_OFFSET;
+	private const float ENERGY_LOSS_ON_BOUNCE = 0.05f;
     private const int SOLVER_ITERATIONS = 3;
     private const float REST_DENSITY = 100f;
+    private const float RELAXATION_CONSTANT = 0.5f;
 	private int ParticleCount = 0;
 
 	public FluidBehaviour() {
@@ -161,7 +162,7 @@ public class FluidBehaviour : MonoBehaviour {
         {
             // Use  the derivative of the spiky kernel.
             float derivative = SpikyDerivative(p, neighbour);
-            sum += Mathf.Pow(Mathf.Abs(derivative), 2);
+            sum += Mathf.Pow(derivative, 2) + RELAXATION_CONSTANT;
 
         }
         return sum;
@@ -183,7 +184,7 @@ public class FluidBehaviour : MonoBehaviour {
 
 	public void ShootFluid (Transform transform) {
 		//for (int i = 0; i < LAYERS_IN_SHOT; i++) {
-			// foreach(Vector3 v in ParticleRow) {
+			//foreach(Vector3 v in ParticleRow) {
                 Vector3 v = ParticleRow[0];
                 int i = 0;
 				FluidParticle p = new FluidParticle(

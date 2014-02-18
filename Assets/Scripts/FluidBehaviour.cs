@@ -10,11 +10,11 @@ public class FluidBehaviour : MonoBehaviour {
 	private const float GRAVITY = 0.005f;
 	private const int LAYERS_IN_SHOT = 5;
 	private const int CIRCLES_IN_SHOT = 3;
-    private const float NEIGHBOUR_DISTANCE = LAYER_OFFSET * 0.8f;
+    private const float NEIGHBOUR_DISTANCE = LAYER_OFFSET;
 	private const float ENERGY_LOSS_ON_BOUNCE = 0.05f;
-    private const int SOLVER_ITERATIONS = 5;
+    private const int SOLVER_ITERATIONS = 12;
     private const float REST_DENSITY = 100f;
-    private const float RELAXATION_CONSTANT = 0.5f;
+    private const float RELAXATION_CONSTANT = 0.75f;
 	private int ParticleCount = 0;
 
 	public FluidBehaviour() {
@@ -160,16 +160,16 @@ public class FluidBehaviour : MonoBehaviour {
         {
             // Use  the derivative of the spiky kernel.
             float derivative = SpikyDerivative(p, neighbour);
-            sum += Mathf.Pow(derivative, 2) + RELAXATION_CONSTANT;
+            sum += Mathf.Pow(derivative, 2);
 
         }
-        return sum;
+        return sum + RELAXATION_CONSTANT;
     }
 
     private float SpikyDerivative(FluidParticle p1, FluidParticle p2)
     {
         return 45 * Mathf.Pow(NEIGHBOUR_DISTANCE, 6) / Mathf.PI
-                * Mathf.Pow(Vector3.Distance(p1.PredictedPosition, p2.PredictedPosition), 2);
+                * Mathf.Pow(NEIGHBOUR_DISTANCE - Vector3.Distance(p1.PredictedPosition, p2.PredictedPosition), 2);
         
     }
 

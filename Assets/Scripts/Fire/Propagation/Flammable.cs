@@ -9,30 +9,19 @@ public class Flammable : MonoBehaviour {
     public delegate void OnFireEvent();
     public event OnFireEvent OnFire;
 
-    public float cellSize = 0.5f;
+    public int FULL_FLAMMABLE_HP = 50;
+    public int FULL_FIRE_HP = 80;
+
+    public float cellSize = 0.3f;
+    public float radius = 0.6f;
     public bool grid2D = true;
 
     void Start() {
-        //FireEventManager.FireSpread += RespondToFire;
-
         Bounds meshBounds = GetComponent<MeshCollider>().bounds;
         Vector3 min = meshBounds.min;
         Vector3 max = meshBounds.max;
 
         int i = 0;
-
-        //for (int y = 0; y < 50; y++) {
-        //    for (int x = 0; x < 50; x++) {
-        //        Vector3 pos = new Vector3(x, 0, y);
-        //        FireCell cell = (FireCell)Instantiate(fireCell, pos, Quaternion.identity);
-        //        cell.AddParentReference(this);
-        //        fireGrid.Add(cell);
-
-        //        if (y == 2 && x == 2) {
-        //            cell.StartFire();
-        //        }
-        //    }
-        //}
 
         for (float x = min.x; x <= max.x; x = x + cellSize) {
             for (float y = min.y; y <= max.y; y = y + cellSize) {
@@ -40,16 +29,17 @@ public class Flammable : MonoBehaviour {
                     Vector3 pos = new Vector3(x, y, z);
                     i++;
 
-                    if (meshBounds.Contains(pos)) {
-                        FireCell cell = (FireCell)Instantiate(fireCell, pos, Quaternion.identity);
-                        cell.AddParentReference(this);
+                    //if (meshBounds.Contains(pos)) {
+                    if (positionInsideThis(pos)) {
+                        FireCell cell = (FireCell)Instantiate(fireCell, pos, transform.rotation);
+                        cell.instantiate(this);
                         fireGrid.Add(cell);
 
                         if (i % 2 == 0) {
                             cell.active = false;
                         }
 
-                        if (i == 691) {
+                        if (i == 251) {
                             cell.StartFire();
                         }
                     }
@@ -58,6 +48,18 @@ public class Flammable : MonoBehaviour {
         }
 
         InvokeRepeating("UpdateSpread", 0f, 1.0f);
+    }
+
+    private bool positionInsideThis(Vector3 pos) {
+        Collider[] closeObjects = Physics.OverlapSphere(pos, cellSize/2);
+
+        foreach (Collider obj in closeObjects) {
+            if (obj.collider == transform.collider) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 	void Update () {
@@ -74,13 +76,5 @@ public class Flammable : MonoBehaviour {
         if (fireGrid.Count == 0) {
             // Create cell and find closest cell
         }
-    }
-
-    private void DamageCellAt(Vector3 position, float radius, int damage) {
-        //foreach (FireCell cell in fireGrid) {
-        //    if(cell.HitBy(position, radius)) {
-        //        cell.Damage(damage);
-        //    }
-        //}
     }
 }

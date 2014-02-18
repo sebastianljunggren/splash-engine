@@ -225,15 +225,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: a2032a8135dc6be47acaf3eb4b88de19, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -.948015749
+      value: 2.43248224
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a2032a8135dc6be47acaf3eb4b88de19, type: 2}
       propertyPath: m_LocalPosition.y
-      value: .908887863
+      value: 2.01528072
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a2032a8135dc6be47acaf3eb4b88de19, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 25.2150955
+      value: -.483786643
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a2032a8135dc6be47acaf3eb4b88de19, type: 2}
       propertyPath: m_LocalRotation.x
@@ -303,6 +303,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireCell: {fileID: 11400000, guid: 34cbb23ae5e136f4f8d6d217a814417d, type: 2}
   cellSize: .300000012
+  flammableHp: 50
+  fireHp: 80
+  radius: .600000024
   grid2D: 1
 --- !u!23 &1462822939
 Renderer:
@@ -432,6 +435,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireCell: {fileID: 11400000, guid: 34cbb23ae5e136f4f8d6d217a814417d, type: 2}
   cellSize: .200000003
+  flammableHp: 50
+  fireHp: 80
+  radius: .600000024
   grid2D: 0
 --- !u!64 &1954663557
 MeshCollider:
@@ -484,7 +490,7 @@ Transform:
   m_PrefabInternal: {fileID: 1262000859}
   m_GameObject: {fileID: 1954663555}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.948015749, y: .908887863, z: 25.2150955}
+  m_LocalPosition: {x: 2.43248224, y: 2.01528072, z: -.483786643}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

@@ -30,7 +30,7 @@ GameObject:
   - 12: {fileID: 1200002}
   - 26: {fileID: 2600002}
   m_Layer: 0
-  m_Name: smoke
+  m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,7 +64,7 @@ GameObject:
   - 4: {fileID: 400006}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: FirePrefab
+  m_Name: FirePrefab_Original
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -220,8 +220,8 @@ EllipsoidParticleEmitter:
   maxSize: .600000024
   minEnergy: 2.0999999
   maxEnergy: 5.0999999
-  minEmission: 120
-  maxEmission: 120
+  minEmission: 20
+  maxEmission: 20
   worldVelocity: {x: 0, y: 0, z: 0}
   localVelocity: {x: 0, y: 0, z: 0}
   rndVelocity: {x: 0, y: 0, z: 0}
@@ -243,12 +243,12 @@ EllipsoidParticleEmitter:
   serializedVersion: 2
   m_Enabled: 1
   m_Emit: 1
-  minSize: .0799999982
-  maxSize: .189999998
+  minSize: .239999995
+  maxSize: .569999993
   minEnergy: 1.39999998
-  maxEnergy: 3
-  minEmission: 40
-  maxEmission: 40
+  maxEnergy: 4
+  minEmission: 30
+  maxEmission: 30
   worldVelocity: {x: 0, y: 0, z: 0}
   localVelocity: {x: 0, y: 0, z: 0}
   rndVelocity: {x: 0, y: 0, z: 0}
@@ -274,8 +274,8 @@ EllipsoidParticleEmitter:
   maxSize: .209999993
   minEnergy: .419999987
   maxEnergy: 3
-  minEmission: 90
-  maxEmission: 90
+  minEmission: 30
+  maxEmission: 30
   worldVelocity: {x: 0, y: 0, z: 0}
   localVelocity: {x: 0, y: 0, z: 0}
   rndVelocity: {x: 0, y: 0, z: 0}

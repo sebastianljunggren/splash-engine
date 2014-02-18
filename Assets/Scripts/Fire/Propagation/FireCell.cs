@@ -9,7 +9,7 @@ public class FireCell : MonoBehaviour {
     public FireBehaviour firePrefab;
     public bool active = true;
 
-    private bool drawGizmos = false;
+    private bool drawGizmos = true;
     private const int damage = 20;
 
     public int flammableHp;
@@ -45,7 +45,7 @@ public class FireCell : MonoBehaviour {
         }
     }
 
-    public void instantiate(Flammable parent) {
+    public void Instantiate(Flammable parent) {
         this.parent = parent;
 
         flammableHp = this.parent.FULL_FLAMMABLE_HP;
@@ -96,7 +96,7 @@ public class FireCell : MonoBehaviour {
                         cell.FireDamage();
                     }
                     else if (flammable != null) {
-                        flammable.RespondToFire(transform.position, parent.radius, 20);
+                        flammable.RespondToFire(transform.position, parent.radius);
                     }
                 }
             }

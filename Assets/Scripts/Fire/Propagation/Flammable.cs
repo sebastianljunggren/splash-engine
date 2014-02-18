@@ -15,9 +15,36 @@ public class Flammable : MonoBehaviour {
     public float cellSize = 0.3f;
     public float radius = 0.6f;
     public bool grid2D = true;
-    public int cellToIgnite = 251;
+
+    // Temp
+    public int cellToIgnite = 1;
+    public bool ignite = false;
+    private bool burning = false;
 
     void Start() {
+        InvokeRepeating("UpdateSpread", 0f, 1.0f);
+    }
+
+	void Update () {
+        if (!burning && ignite) {
+            GenerateGrid();
+            burning = true;
+        }
+	}
+
+    void UpdateSpread() {
+        if (OnFire != null) {
+            OnFire();
+        }
+    }
+
+    public void RespondToFire(Vector3 position, float radius) {
+        if (fireGrid.Count == 0) {
+            GenerateGrid();
+        }
+    }
+
+    private void GenerateGrid() {
         Bounds meshBounds = transform.collider.bounds;
         Vector3 min = meshBounds.min;
         Vector3 max = meshBounds.max;
@@ -33,7 +60,7 @@ public class Flammable : MonoBehaviour {
                     //if (meshBounds.Contains(pos)) {
                     if (positionInsideThis(pos)) {
                         FireCell cell = (FireCell)Instantiate(fireCell, pos, transform.rotation);
-                        cell.instantiate(this);
+                        cell.Instantiate(this);
                         fireGrid.Add(cell);
 
                         if (i % 2 == 0) {
@@ -47,12 +74,10 @@ public class Flammable : MonoBehaviour {
                 }
             }
         }
-
-        InvokeRepeating("UpdateSpread", 0f, 1.0f);
     }
 
     private bool positionInsideThis(Vector3 pos) {
-        Collider[] closeObjects = Physics.OverlapSphere(pos, cellSize/2);
+        Collider[] closeObjects = Physics.OverlapSphere(pos, cellSize / 2);
 
         foreach (Collider obj in closeObjects) {
             if (obj.collider == transform.collider) {
@@ -61,21 +86,5 @@ public class Flammable : MonoBehaviour {
         }
 
         return false;
-    }
-
-	void Update () {
-
-	}
-
-    void UpdateSpread() {
-        if (OnFire != null) {
-            OnFire();
-        }
-    }
-
-    public void RespondToFire(Vector3 position, float radius, int damage) {
-        if (fireGrid.Count == 0) {
-            // Create cell and find closest cell
-        }
     }
 }

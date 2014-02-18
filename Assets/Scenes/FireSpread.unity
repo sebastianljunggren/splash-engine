@@ -124,7 +124,8 @@ MonoBehaviour:
   cellSize: .300000012
   radius: .600000024
   grid2D: 1
-  cellToIgnite: 251
+  cellToIgnite: 1
+  ignite: 0
 --- !u!23 &240422144
 Renderer:
   m_ObjectHideFlags: 0
@@ -223,6 +224,14 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 6500000, guid: bfd1e5faa74caa541926203500ba6359, type: 2}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: bfd1e5faa74caa541926203500ba6359, type: 2}
+      propertyPath: cellToIgnite
+      value: 251
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: bfd1e5faa74caa541926203500ba6359, type: 2}
+      propertyPath: ignite
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
@@ -554,6 +563,7 @@ MonoBehaviour:
   radius: .600000024
   grid2D: 1
   cellToIgnite: 251
+  ignite: 1
 --- !u!23 &857363522
 Renderer:
   m_ObjectHideFlags: 0
@@ -645,7 +655,8 @@ MonoBehaviour:
   cellSize: .300000012
   radius: .600000024
   grid2D: 1
-  cellToIgnite: 251
+  cellToIgnite: 1
+  ignite: 0
 --- !u!23 &1334184170
 Renderer:
   m_ObjectHideFlags: 0
@@ -765,6 +776,7 @@ MonoBehaviour:
   radius: .600000024
   grid2D: 0
   cellToIgnite: 251
+  ignite: 0
 --- !u!65 &1954663557
 BoxCollider:
   m_ObjectHideFlags: 0

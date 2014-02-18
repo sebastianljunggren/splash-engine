@@ -3,9 +3,13 @@ using System.Collections;
 
 public class FireBehaviour : MonoBehaviour {
 	
+	private Component[] fireComponentsArray;
 
 	void Start() {
-
+//		fireComponentsArray = GetComponentsInChildren<ParticleEmitter>();
+//		fireComponentsArray[0].particleEmitter.enabled = false;
+//		fireComponentsArray[1].particleEmitter.enabled = false;
+//		fireComponentsArray[2].particleEmitter.enabled = false;
 	}
 
 	void update () {
@@ -14,7 +18,7 @@ public class FireBehaviour : MonoBehaviour {
 
 	//Called when cells are damaged enough
 	void IncreaseIntensity() {
-		
+
 	}
 
 	//Called when cells are healed enough

@@ -2,18 +2,27 @@
 using System.Collections;
 
 public class FireCell : MonoBehaviour {
-    public float radius = 0.5f;
-    private bool active = true;
+    //public float radius = 0.5f;
+    //private bool active = true;
     public bool isBurning = false;
     public int hp = 50;
     Flammable parent;
 
     void Start() {
-
+        transform.localScale = new Vector3(parent.cellSize, parent.cellSize, parent.cellSize);
     }
 
     void Update() {
+        //Debug.Log("meshBounds");
 
+        //Debug.Log("Contains " + parent.meshBounds.Contains(transform.position));
+        //Debug.Log("Intersect " + parent.meshBounds.Intersects(GetComponent<BoxCollider>().bounds));
+        //Debug.Log(parent.MeshContains(this));
+        
+        //Debug.Log("");
+        //Debug.Log("boxCollider");
+        //Debug.Log("Contains " + parent.boxBounds.Contains(transform.position));
+        //Debug.Log("Intersect " + parent.boxBounds.Intersects(GetComponent<BoxCollider>().bounds));
     }
 
     public void Damage(int damage) {
@@ -62,13 +71,11 @@ public class FireCell : MonoBehaviour {
             //Gizmos.color = Color.green;
         }
 
-        //Gizmos.DrawWireCube(transform.position, new Vector3(1f, 1f, 1f));
+        Gizmos.DrawWireCube(transform.position, new Vector3(parent.cellSize, parent.cellSize, parent.cellSize));
         Gizmos.color = Color.white;
     }
 
     void OnDrawGizmosSelected() {
-        if (isBurning) {
-            //Burning();
-        }
+        Debug.Log("Contains " + parent.meshBounds.Contains(transform.position));
     }
 }

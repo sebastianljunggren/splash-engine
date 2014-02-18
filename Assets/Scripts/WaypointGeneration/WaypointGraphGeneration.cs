@@ -45,7 +45,7 @@ namespace WaypointGeneration {
 
             }
 
-            Debug.Log("Generation done!");
+            Debug.Log("Generation done! N: " + nodes.Count + ", E: " + edges.Count);
 
             return new WaypointGraph(nodes.ToArray(), edges.ToArray());
 

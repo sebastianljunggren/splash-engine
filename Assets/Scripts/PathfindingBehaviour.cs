@@ -11,37 +11,27 @@ public class PathfindingBehaviour : MonoBehaviour {
 	public float rotationSpeed;
 	public GameWorld gameWorld;
 
-	private WaypointNode[] currentWaypoints;
+	private WaypointNode[] currentWaypoints = new WaypointNode[0];
 	private Vector3 waypointTarget;
-	private int waypointIndex;
+	private int waypointIndex = 0;
 	private Transform cachedTransform;
-    private string targetName;
+    //private string targetName;
 
+    public string Target;
     public event TargetReachedEvent TargetReached;
+    
+    // TODO: Should be replaced by state machine
+    public bool IsBusy = false;
 
 	// Use this for initialization
 	void Start () {
 		cachedTransform = transform;
 
         waypointTarget = cachedTransform.position;
-        StartJourney("Room1");
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKey(KeyCode.Alpha1)) {
-            StartJourney("Room1");
-        }
-        if (Input.GetKey(KeyCode.Alpha2)) {
-            StartJourney("Room2");
-        }
-        if (Input.GetKey(KeyCode.Alpha3)) {
-            StartJourney("Room3");
-        }
-        if (Input.GetKey(KeyCode.Alpha4)) {
-            StartJourney("Room4");
-        }
-
 		Vector3 distance = waypointTarget - cachedTransform.position;
 		if (distance.magnitude > 0.5) {
 			distance.Normalize();
@@ -59,12 +49,14 @@ public class PathfindingBehaviour : MonoBehaviour {
             MoveTo(currentWaypoints[waypointIndex].position);
         }
         else {
-            TargetReached(this, targetName);
+            TargetReached(this, Target);
+            IsBusy = false;
+            Target = string.Empty;
         }
 	}
 
     public void StartJourney(string objectName) {
-        this.targetName = objectName;
+        this.Target = objectName;
         currentWaypoints = gameWorld.ShortestPath(cachedTransform.position, GameObject.Find(objectName).transform.position);
 
         if (currentWaypoints.Length > 0) {
@@ -74,6 +66,8 @@ public class PathfindingBehaviour : MonoBehaviour {
 
             waypointIndex = 0;
             MoveTo(currentWaypoints[waypointIndex].position);
+
+            IsBusy = true;
         }
     }
 

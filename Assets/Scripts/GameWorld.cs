@@ -22,6 +22,10 @@ public class GameWorld : MonoBehaviour {
         }
     }
 
+    public RoomInformation[] GetRooms() {
+        return GetComponentsInChildren<RoomInformation>();
+    }
+
     // Dijkstra's algorithm for shortest path
     public WaypointNode[] ShortestPath(Vector3 source, Vector3 target) {
         WaypointNode[] nodes = graph.Nodes;

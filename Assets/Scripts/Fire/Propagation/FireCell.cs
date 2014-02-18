@@ -2,15 +2,18 @@
 using System.Collections;
 
 public class FireCell : MonoBehaviour {
-    private float radius = 0.6f;
-    public bool active = true;
     private bool isBurning = false;
-    
-    Flammable parent;
+    private Flammable parent;
     private FireBehaviour fire;
 
     public FireBehaviour firePrefab;
-    public int hp = 50;
+    public bool active = true;
+
+    private bool drawGizmos = true;
+    private const int damage = 20;
+
+    public int flammableHp;
+    public int fireHp;
 
     void Start() {
         transform.localScale = new Vector3(parent.cellSize, parent.cellSize, parent.cellSize);
@@ -20,11 +23,11 @@ public class FireCell : MonoBehaviour {
 
     }
 
-    public void Damage(int damage) {
-        if (!isBurning && active) {
-            hp -= damage;
+    public void FireDamage() {
+        if (active && !isBurning) {
+            flammableHp -= 20;
 
-            isBurning = hp <= 0;
+            isBurning = flammableHp <= 0;
 
             if (isBurning) {
                 StartFire();
@@ -32,19 +35,46 @@ public class FireCell : MonoBehaviour {
         }
     }
 
-    public void AddParentReference(Flammable parent) {
+    public void WaterDamage() {
+        if (active && isBurning) {
+            fireHp -= 20;
+
+            if (fireHp <= 0) {
+                ExtinguishFire();
+            }
+        }
+    }
+
+    public void Instantiate(Flammable parent) {
         this.parent = parent;
+
+        flammableHp = this.parent.FULL_FLAMMABLE_HP;
+        fireHp = this.parent.FULL_FIRE_HP;
     }
 
     public void StartFire() {
         if (active) {
-            hp = 0;
+            flammableHp = 0;
             isBurning = true;
 
-            // Spawn fire at the current position
-            fire = (FireBehaviour)Instantiate(firePrefab, transform.position, Quaternion.identity);
+            if (!drawGizmos) {
+                // Spawn fire at the current position
+                fire = (FireBehaviour)Instantiate(firePrefab, transform.position, Quaternion.identity);
+            }
 
             parent.OnFire += Burning;
+        }
+    }
+
+    public void ExtinguishFire() {
+        if (active) {
+            fireHp = 0;
+            isBurning = false;
+            flammableHp = parent.FULL_FLAMMABLE_HP;
+
+            // Decrease fire intensity
+
+            parent.OnFire -= Burning;
         }
     }
 
@@ -52,7 +82,9 @@ public class FireCell : MonoBehaviour {
         if (active) {
             //fire.IncreaseIntensity();
 
-            Collider[] closeObjects = Physics.OverlapSphere(transform.position * Random.Range(0.6f, 1.3f), radius * Random.Range(0.2f, 1.3f));
+            Collider[] closeObjects = Physics.OverlapSphere(
+                transform.position * Random.Range(0.6f, 1.3f),
+                parent.radius * Random.Range(0.2f, 1.3f));
 
             foreach (Collider obj in closeObjects) {
                 // Check if it collides with itself
@@ -61,10 +93,10 @@ public class FireCell : MonoBehaviour {
                     FireCell cell = obj.GetComponent<FireCell>();
 
                     if (cell != null) {
-                        cell.Damage(20);
+                        cell.FireDamage();
                     }
                     else if (flammable != null) {
-                        flammable.RespondToFire(transform.position, radius, 20);
+                        flammable.RespondToFire(transform.position, parent.radius);
                     }
                 }
             }
@@ -72,22 +104,15 @@ public class FireCell : MonoBehaviour {
     }
 
     void OnDrawGizmos() {
-        if (active) {
-            if (isBurning) {
-                Gizmos.color = Color.red;
-                //Gizmos.DrawWireSphere(transform.position, 2f);
-            }
-
-            if (hp < 50 && hp != 0) {
-                //Gizmos.color = Color.green;
-            }
-
-            //Gizmos.DrawWireCube(transform.position, new Vector3(parent.cellSize, parent.cellSize, parent.cellSize));
-            Gizmos.color = Color.white;
+        if (isBurning) {
+            Gizmos.color = Color.red;
+            //Gizmos.DrawWireSphere(transform.position, 2f);
         }
-    }
 
-    void OnDrawGizmosSelected() {
+        if (drawGizmos) {
+            Gizmos.DrawWireCube(transform.position, new Vector3(parent.cellSize, parent.cellSize, parent.cellSize));
+        }
 
+        Gizmos.color = Color.white;
     }
 }

@@ -65,9 +65,8 @@ public class AgentManager : MonoBehaviour {
 
 
         if (allRoomsDiscovered()) {
-            agentState = AgentState.DIVIDE;
-            divideAgents();
-            Debug.Log("Dividing the agents");
+            //agentState = AgentState.DIVIDE;
+            
         }
     }
 
@@ -92,10 +91,12 @@ public class AgentManager : MonoBehaviour {
 
         // Divide based on most fire
         for (int i=0; i<rooms.Length; i++) {
-            float firePercentage = rooms[i].FireCount / (float)totalFire;
-            int numberOfAgents = Mathf.RoundToInt(firePercentage * agents.Length);
-            Debug.Log(rooms[i].name + ": " + firePercentage);
-            sendNearestAgentsToRoom(rooms[i], numberOfAgents);
+            if (rooms[i].IsDiscovered) {
+                float firePercentage = rooms[i].FireCount / (float)totalFire;
+                int numberOfAgents = Mathf.RoundToInt(firePercentage * agents.Length);
+                Debug.Log(rooms[i].name + ": " + firePercentage);
+                sendNearestAgentsToRoom(rooms[i], numberOfAgents);
+            }
         }
     }
 
@@ -120,8 +121,14 @@ public class AgentManager : MonoBehaviour {
 
 
         for (int i = 0; i < rooms.Length; i++) {
-            if (rooms[i].name.Equals(arg)) {
+            if (rooms[i].name.Equals(arg) && !rooms[i].IsDiscovered) {
+                // Newly discovered room
                 rooms[i].IsDiscovered = true;
+
+                // Divide the agents once more based on the new data.
+                divideAgents();
+                Debug.Log("Dividing the agents");
+
             }
             //Debug.Log(rooms[i].name + ": " + rooms[i].IsDiscovered);
         }

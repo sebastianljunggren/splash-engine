@@ -15,4 +15,9 @@ public class RoomInformation : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    void OnTriggerEnter(Collider other) {
+        Debug.Log(name + " colliding with " + other.name);
+        other.GetComponent<AgentBehaviour>().Pathfinding.RoomReached(name);
+    }
 }

@@ -52,7 +52,7 @@ public class FireCell : MonoBehaviour {
         if (active) {
             //fire.IncreaseIntensity();
 
-            Collider[] closeObjects = Physics.OverlapSphere(transform.position, radius);
+            Collider[] closeObjects = Physics.OverlapSphere(transform.position * Random.Range(0.6f, 1.3f), radius * Random.Range(0.2f, 1.3f));
 
             foreach (Collider obj in closeObjects) {
                 // Check if it collides with itself

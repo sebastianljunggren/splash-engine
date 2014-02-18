@@ -10,9 +10,9 @@ public class FluidBehaviour : MonoBehaviour {
 	private const float GRAVITY = 0.005f;
 	private const int LAYERS_IN_SHOT = 5;
 	private const int CIRCLES_IN_SHOT = 3;
-    private const float NEIGHBOUR_DISTANCE = LAYER_OFFSET;
+    private const float NEIGHBOUR_DISTANCE = LAYER_OFFSET * 0.8f;
 	private const float ENERGY_LOSS_ON_BOUNCE = 0.05f;
-    private const int SOLVER_ITERATIONS = 3;
+    private const int SOLVER_ITERATIONS = 5;
     private const float REST_DENSITY = 100f;
     private const float RELAXATION_CONSTANT = 0.5f;
 	private int ParticleCount = 0;
@@ -59,14 +59,12 @@ public class FluidBehaviour : MonoBehaviour {
 			p.Velocity.y -= GRAVITY;
 
 			Vector3 newPosition = p.Position + p.Velocity;
-			if (Physics.Linecast(p.Position, newPosition)) {
-				RaycastHit hit = new RaycastHit();
-				if (Physics.Raycast(p.Position, p.Velocity, out hit)) {
-					if (hit.normal.y != 0) {
-						p.Velocity.y += GRAVITY;
-					}
-					p.Velocity = Vector3.Reflect(p.Velocity * ENERGY_LOSS_ON_BOUNCE, hit.normal);
+            RaycastHit hit = new RaycastHit();
+			if (Physics.Linecast(p.Position, newPosition, out hit)) {
+				if (hit.normal.y != 0) {
+					p.Velocity.y += GRAVITY;
 				}
+				p.Velocity = Vector3.Reflect(p.Velocity * ENERGY_LOSS_ON_BOUNCE, hit.normal);
 				newPosition = p.Position + p.Velocity;
 			}
 			p.PredictedPosition = newPosition;

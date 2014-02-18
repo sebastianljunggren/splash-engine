@@ -11,9 +11,9 @@ public class FluidBehaviour : MonoBehaviour {
 	private const int LAYERS_IN_SHOT = 5;
 	private const int CIRCLES_IN_SHOT = 3;
     private const float NEIGHBOUR_DISTANCE = LAYER_OFFSET;
-	private const float ENERGY_LOSS_ON_BOUNCE = 0.05f;
-    private const int SOLVER_ITERATIONS = 12;
-    private const float REST_DENSITY = 100f;
+	private const float ENERGY_LOSS_ON_BOUNCE = 0.01f;
+    private const int SOLVER_ITERATIONS = 4;
+    private const float REST_DENSITY = 50f / NEIGHBOUR_DISTANCE;
     private const float RELAXATION_CONSTANT = 0.75f;
 	private int ParticleCount = 0;
 
@@ -60,7 +60,7 @@ public class FluidBehaviour : MonoBehaviour {
 
 			Vector3 newPosition = p.Position + p.Velocity;
             RaycastHit hit = new RaycastHit();
-			if (Physics.Linecast(p.Position, newPosition, out hit)) {
+			if (Physics.Linecast(p.Position, newPosition + LAYER_OFFSET * (newPosition - p.Position).normalized, out hit)) {
 				if (hit.normal.y != 0) {
 					p.Velocity.y += GRAVITY;
 				}
@@ -119,7 +119,8 @@ public class FluidBehaviour : MonoBehaviour {
                     deltaPos[i] += (lambdas[i] + lambdas[neigbour.Index]) * Vector3.Normalize(p.PredictedPosition - neigbour.PredictedPosition) * SpikyDerivative(p, neigbour);
                 }
                 deltaPos[i] = 1 / REST_DENSITY * deltaPos[i] ;
-                if (Physics.Linecast(p.PredictedPosition, p.PredictedPosition + deltaPos[i])) {
+                Vector3 newPosition = p.PredictedPosition + deltaPos[i];
+                if (Physics.Linecast(p.PredictedPosition, newPosition + LAYER_OFFSET * (newPosition - p.Position).normalized)) {
                     deltaPos[i] = Vector3.zero;
                 }
             }

@@ -2,11 +2,11 @@
 using System.Collections;
 
 public class FireEventManager {
-    //public delegate void OnFireEvent();
-    //public static event OnFireEvent OnFire;
-
     public delegate void FireSpreadEvent(Vector3 position, float radius, int damage);
     public static event FireSpreadEvent FireSpread;
+
+    public delegate void SpawnFireEvent(Vector3 position);
+    public static event SpawnFireEvent SpawnFire;
 
     public FireEventManager() {
 
@@ -18,9 +18,9 @@ public class FireEventManager {
         }
     }
 
-    //public static void spreadFire() {
-    //    if (OnFire != null) {
-    //        OnFire();
-    //    }
-    //}
+    public static void SpawnFireAt(Vector3 position) {
+        if (SpawnFire != null) {
+            SpawnFire(position);
+        }
+    }
 }

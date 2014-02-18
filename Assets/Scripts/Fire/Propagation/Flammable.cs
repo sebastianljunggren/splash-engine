@@ -15,6 +15,7 @@ public class Flammable : MonoBehaviour {
     public float cellSize = 0.3f;
     public float radius = 0.6f;
     public bool grid2D = true;
+    public int cellToIgnite = 251;
 
     void Start() {
         Bounds meshBounds = GetComponent<MeshCollider>().bounds;
@@ -39,7 +40,7 @@ public class Flammable : MonoBehaviour {
                             cell.active = false;
                         }
 
-                        if (i == 251) {
+                        if (i == cellToIgnite) {
                             cell.StartFire();
                         }
                     }

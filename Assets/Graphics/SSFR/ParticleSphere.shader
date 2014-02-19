@@ -1,6 +1,7 @@
 ﻿Shader "Custom/ParticleSphere" {
 	Properties {
 		_LightDir ("Light direction", Vector) = (0,0,0,0)
+		_CameraDepthNormalsTexture ("Depth Normal Map", 2D) = {}
 	}
 	SubShader {
 		Pass {

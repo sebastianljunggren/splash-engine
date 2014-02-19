@@ -174,7 +174,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41e1c48b2579a594fa7d4661cf07f2ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 1
 --- !u!4 &41951472
 Transform:
   m_ObjectHideFlags: 0
@@ -734,6 +733,7 @@ GameObject:
   - 92: {fileID: 2014209510}
   - 124: {fileID: 2014209509}
   - 81: {fileID: 2014209508}
+  - 114: {fileID: 2014209512}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -806,6 +806,18 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
   m_OcclusionCulling: 1
+--- !u!114 &2014209512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2014209506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caae6a09884d7bc44823a26e56bc33d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mat: {fileID: 2100000, guid: 0e83ab4bf3032a44cad1084a80fc7033, type: 2}
 --- !u!1 &2138795551
 GameObject:
   m_ObjectHideFlags: 0

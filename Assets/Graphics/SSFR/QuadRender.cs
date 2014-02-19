@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class QuadRender : MonoBehaviour {
@@ -14,8 +14,8 @@ public class QuadRender : MonoBehaviour {
 		foreach (var particle in GetComponent<FluidBehaviour>().Particles)
 		{
 			Graphics.DrawMesh(filter.mesh, particle.Position,
-			                  mainCam.transform.rotation,
-			                  filter.renderer.material, 0);
+				                  mainCam.transform.rotation,
+				                  filter.renderer.material, 0);
 		}
 	}
 

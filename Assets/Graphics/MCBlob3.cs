@@ -19,14 +19,12 @@
  *
  * Cheers & God bless
  */
- 
+
 /*Unity Specific*/
 using UnityEngine;
 using System.Collections;
 
-public class MCBlob: MonoBehaviour {
-
-	public static float POWER = .25f;
+public class MCBlob3: MonoBehaviour {
 	
 	/*Amount of cubes in X/Y/Z directions, Dimension will always be from -.5f to .5f in XYZ
 	  remember to call Regen() if changing!
@@ -34,7 +32,7 @@ public class MCBlob: MonoBehaviour {
 	int _dimX=30;
 	int _dimY=30;
 	int _dimZ=30;
-	    		
+	
 	public int dimX {
 		get {return _dimX; }
 		set {_dimX=value; Regen(); }
@@ -52,7 +50,7 @@ public class MCBlob: MonoBehaviour {
 	//public float[][] blobs;
 	
 	/*Cutoff intensity, where the surface of mesh will be created*/
-	public float isoLevel=.5f;
+	public float isoLevel=.5f;	
 	
 	/*Scratch buffers for Vertices/Normals/Tris */
 	private Vector3[] newVertex;
@@ -70,9 +68,9 @@ public class MCBlob: MonoBehaviour {
 	private mcPoint[] _points;
 	private mcEdge[] _edges;
 	private mcCube[] _cubes;
-
-
-    /*Scratch buffers for use within functions, to eliminate the usage of new almost entirely each frame*/
+	
+	
+	/*Scratch buffers for use within functions, to eliminate the usage of new almost entirely each frame*/
 	private Vector3[] tada;
 	private Vector2[] tada2;
 	private int tadac,tadac2;
@@ -94,7 +92,7 @@ public class MCBlob: MonoBehaviour {
 			}
 			points=new mcPoint[8];
 		}
-	
+		
 		
 		/*12 Edges, see march() for their positioning*/
 		public mcEdge[] edges;
@@ -137,22 +135,22 @@ public class MCBlob: MonoBehaviour {
 	/*Point (in lattice) class*/
 	public class mcPoint {
 		
-
+		
 		
 		/*Calculated Intensity or Power of point*/
 		public float _i;
 		
 		public int px,py,pz;
 		
-		private MCBlob mcblob;
+		private MCBlob3 mcblob;
 		
 		public int cntr;
-	 
-		/*Object Space position of point*/
-	    public float[] index;
-	    
 		
-		public mcPoint(float x,float y,float z,int px,int py,int pz,MCBlob thismcblob)
+		/*Object Space position of point*/
+		public float[] index;
+		
+		
+		public mcPoint(float x,float y,float z,int px,int py,int pz,MCBlob3 thismcblob)
 		{
 			this.index=new float[3];
 			index[0]=x;index[1]=y;index[2]=z;
@@ -179,7 +177,7 @@ public class MCBlob: MonoBehaviour {
 		}
 		
 		
-				
+		
 		/*Calculate the power of a point only if it hasn't been calculated already for this frame*/
 		public float i()
 		{
@@ -187,10 +185,9 @@ public class MCBlob: MonoBehaviour {
 			if(cntr<mcblob.pctr) {
 				cntr=mcblob.pctr;
 				pwr=0f;
-				var blobs = this.mcblob.GetComponent<FluidBehaviour>().Particles;
-				for(int jc=0;jc<blobs.Count;jc++) {
-					FluidParticle pb=blobs[jc];					
-					pwr+=(1.0f/Mathf.Sqrt(((pb.Position.x-this.x)*(pb.Position.x-this.x))+((pb.Position.y-this.y)*(pb.Position.y-this.y))+((pb.Position.z-this.z)*(pb.Position.z-this.z))))* POWER; // CONSTANT
+				for(int jc=0;jc<this.mcblob.GetComponent<FluidBehaviour>().Particles.Count;jc++) {
+					FluidParticle pb=this.mcblob.GetComponent<FluidBehaviour>().Particles[jc];					
+					pwr+=(1.0f/Mathf.Sqrt(((pb.Position.x-this.x)*(pb.Position.x-this.x))+((pb.Position.y-this.y)*(pb.Position.y-this.y))+((pb.Position.z-this.z)*(pb.Position.z-this.z))))*MCBlob.POWER;
 				}
 				this._i=pwr;
 			}
@@ -210,7 +207,7 @@ public class MCBlob: MonoBehaviour {
 		
 		
 	}
-
+	
 	
 	
 	/* Normals are calculated by 'averaging' all the derivatives of the Blob power functions*/ 
@@ -219,17 +216,16 @@ public class MCBlob: MonoBehaviour {
 		int jc;
 		Vector3 result=tada[tadac++];
 		result.x=0;result.y=0;result.z=0;
-		var blobs = GetComponent<FluidBehaviour>().Particles;
-		for(jc=0;jc<blobs.Count;jc++)
+		for(jc=0;jc<this.GetComponent<FluidBehaviour>().Particles.Count;jc++)
 		{
-			FluidParticle pb=blobs[jc];
+			FluidParticle pb=this.GetComponent<FluidBehaviour>().Particles[jc];
 			
 			Vector3 current=tada[tadac++];
 			current.x=pnt.x-pb.Position.x;
 			current.y=pnt.y-pb.Position.y;
 			current.z=pnt.z-pb.Position.z;
 			float mag=current.magnitude;
-			float pwr=.5f*(1f/(mag*mag*mag))* POWER; // CONSTANT			
+			float pwr=.5f*(1f/(mag*mag*mag))*MCBlob.POWER;			
 			result=result+(current*pwr);			
 		}
 		return result.normalized;
@@ -257,7 +253,7 @@ public class MCBlob: MonoBehaviour {
 		Vector3 tmp=tada[tadac++];
 		tmp[0]=a[0];tmp[1]=a[1];tmp[2]=a[2];
 		tmp[axisI]=a[axisI]+(mu*(b[axisI]-a[axisI]));
-
+		
 		return tmp;
 	}
 	
@@ -292,7 +288,7 @@ public class MCBlob: MonoBehaviour {
 	{		
 		int edgec,vertc;
 		edgec=0;vertc=0;
-						
+		
 		int cubeIndex=0;
 		
 		if(cube.points[0].i()>isoLevel) {cubeIndex|=1;}						
@@ -324,12 +320,12 @@ public class MCBlob: MonoBehaviour {
 			int tmp;				
 			while(triTable[cubeIndex,tpi]!=-1) {
 				tmp=cube.edges[triTable[cubeIndex,tpi+2]].vi;
-   				newTri[triP++]=tmp;vertc+=tmp;	
-   				tmp=cube.edges[triTable[cubeIndex,tpi+1]].vi;
-   				newTri[triP++]=tmp;vertc+=tmp;
-   				tmp=cube.edges[triTable[cubeIndex,tpi]].vi;
-   				newTri[triP++]=tmp;vertc+=tmp;
-   				tpi+=3;   							  
+				newTri[triP++]=tmp;vertc+=tmp;	
+				tmp=cube.edges[triTable[cubeIndex,tpi+1]].vi;
+				newTri[triP++]=tmp;vertc+=tmp;
+				tmp=cube.edges[triTable[cubeIndex,tpi]].vi;
+				newTri[triP++]=tmp;vertc+=tmp;
+				tpi+=3;   							  
 			}
 			
 			return true;
@@ -360,9 +356,9 @@ public class MCBlob: MonoBehaviour {
 		if(nCube!=null && nCube.cntr<pctr) {nCube.cntr=pctr; if(doCube(nCube)) { recurseCube(nCube); }}
 		nCube=getCube(jx,jy,jz-1);
 		if(nCube!=null && nCube.cntr<pctr) {nCube.cntr=pctr; if(doCube(nCube)) { recurseCube(nCube); }}
-
 		
-
+		
+		
 		
 	}
 	
@@ -374,10 +370,9 @@ public class MCBlob: MonoBehaviour {
 	private void march()
 	{
 		int i,jx,jy,jz;
-		var blobs = GetComponent<FluidBehaviour> ().Particles;
-		for(i=0;i<blobs.Count;i++)
+		for(i=0;i<this.GetComponent<FluidBehaviour>().Particles.Count;i++)
 		{
-			FluidParticle pb=blobs[i];
+			FluidParticle pb=this.GetComponent<FluidBehaviour>().Particles[i];
 			jx=(int)((pb.Position.x+.5f)*dimX);
 			jy=(int)((pb.Position.y+.5f)*dimY);
 			jz=(int)((pb.Position.z+.5f)*dimZ);
@@ -402,63 +397,63 @@ public class MCBlob: MonoBehaviour {
 		
 	}
 	
- 	
- 	 	
- 	
- 	/*Unity and Sample Specific, scratch caches to not reallocate vertices/tris/etc...*/
- 	Vector3[] fv,fn;
- 	int[] ft;
- 	Vector2[] fuv;
- 
-    //Last Status Post
- 	private float lt=0f;
 	
- 	
- 	/*Unity and Sample Specific*/
+	
+	
+	/*Unity and Sample Specific, scratch caches to not reallocate vertices/tris/etc...*/
+	Vector3[] fv,fn;
+	int[] ft;
+	Vector2[] fuv;
+	
+	//Last Status Post
+	private float lt=0f;
+	
+	
+	/*Unity and Sample Specific*/
 	private void renderMesh()
 	{
-		 int i;	
+		int i;	
 		
 		transform.Rotate(Time.deltaTime*10f,0,Time.deltaTime*.6f);
-				
+		
 		if(lt+1<Time.time) {
 			lt=Time.time;
 			//GUIText guit=(GUIText) GameObject.Find("guit").guiText;
-            //guit.text="T:"+triP+" V:"+vertP+" C:"+cubec+" FPS:"+(int)(1f/Time.deltaTime);
+			//guit.text="T:"+triP+" V:"+vertP+" C:"+cubec+" FPS:"+(int)(1f/Time.deltaTime);
 		}
-	   
+		
 		
 		
 		/*Clear the Vertices that don't have any real information assigned to them */
 		for(i=0;i<vertP;i++) {fv[i]=newVertex[i];fn[i]=newNormal[i];		                      
-							  fuv[i]=tada2[tadac2++];
-							  Vector3 fuvt=transform.TransformPoint(fn[i]).normalized;							  
-							  fuv[i].x=(fuvt.x+1f)*.5f;fuv[i].y=(fuvt.y+1f)*.5f;}							  
-//							  fuv[i].x=fn[i].x;fuv[i].y=fn[i].y;}
-							  
+			fuv[i]=tada2[tadac2++];
+			Vector3 fuvt=transform.TransformPoint(fn[i]).normalized;							  
+			fuv[i].x=(fuvt.x+1f)*.5f;fuv[i].y=(fuvt.y+1f)*.5f;}							  
+		//							  fuv[i].x=fn[i].x;fuv[i].y=fn[i].y;}
+		
 		for(i=vertP;i<fv.Length;i++) {fv[i][0]=0;fn[i][0]=0;fuv[i][0]=0;
-							  fv[i][1]=0;fn[i][1]=0;fuv[i][1]=0;
-							  fv[i][2]=0;}
-							  
-							  
+			fv[i][1]=0;fn[i][1]=0;fuv[i][1]=0;
+			fv[i][2]=0;}
+		
+		
 		for(i=0;i<triP;i++) {ft[i]=newTri[i];}
 		for(i=triP;i<ft.Length;i++) {ft[i]=0;}
 		
 		Mesh mesh=((MeshFilter) GetComponent("MeshFilter")).mesh;
-				
 		
-	    mesh.vertices = fv ;
-	    mesh.uv = fuv;
-	    	    mesh.triangles = ft;	
-	    mesh.normals = fn;
-	    
-	    /*For Disco Ball Effect*/
-	    //mesh.RecalculateNormals();	
-	
-	
+		
+		mesh.vertices = fv ;
+		mesh.uv = fuv;
+		mesh.triangles = ft;	
+		mesh.normals = fn;
+		
+		/*For Disco Ball Effect*/
+		//mesh.RecalculateNormals();	
+		
+		
 	}
-
-    /*What is needed to do every frame for the calculation and rendering of the Metaballs*/
+	
+	/*What is needed to do every frame for the calculation and rendering of the Metaballs*/
 	void doFrame()
 	{
 		tadac=0;
@@ -474,8 +469,7 @@ public class MCBlob: MonoBehaviour {
 	/*Regenerate Lattice and Connections, when changing Dimensions of Lattice*/
 	public void Regen() {
 		startObjs();	
-		startEngine();
-		Debug.Log ("regen");
+		startEngine();	
 	}
 	
 	
@@ -483,38 +477,14 @@ public class MCBlob: MonoBehaviour {
 	//Unity and Sample specific
 	void Update () {
 
-        //blobs[0][0] = -.125f - .125f * (float)Mathf.Cos((float)Time.time * 2f);
-		//blobs[1][0] = .125f + .125f * (float)Mathf.Cos((float)Time.time * 2f);
-
-        //blobs[0][0]=.12f+.12f*(float)Mathf.Sin((float)Time.time*.50f);
-        //blobs[0][2]=.06f+.23f*(float)Mathf.Cos((float)Time.time*.2f);
-        //blobs[1][0]=.12f+.12f*(float)Mathf.Sin((float)Time.time*.2f);
-        //blobs[1][2]=-.23f+.10f*(float)Mathf.Cos((float)Time.time*1f);
-        //blobs[4][0]=.206f+.1f*(float)Mathf.Cos((float)Time.time*.5f);
-        //blobs[4][1]=.056f+.2f*(float)Mathf.Sin((float)Time.time*.3f);
-        //blobs[4][2]=.25f+.08f*(float)Mathf.Cos((float)Time.time*.2f);
-
-        doFrame();
+		doFrame();
 	}
-
+	
 	//Unity and Sample Specific
 	void Start () {
 		lt=0f;
-		//blobs = new float[2][];
 
-        //blobs[0]=new float[]{-.25f,0,0,.3f};
-		//blobs[1]=new float[]{.25f,0,0,.2f};
-        //blobs[2]=new float[]{-.18f,.125f,-.25f,.16f};
-        //blobs[3]=new float[]{-.13f,.23f,.255f,.13f};		
-        //blobs[4]=new float[]{-.18f,.125f,.35f,.12f};
-
-		Debug.Log ("MCBlob");
-		for (int i = 0; i < this.GetComponent<FluidBehaviour> ().Particles.Count; i++) {
-			Debug.Log (this.GetComponent<FluidBehaviour> ().Particles[i].Position);
-		}
-
-	    
-	    Regen();
+		Regen();
 	}
 	
 	
@@ -552,7 +522,7 @@ public class MCBlob: MonoBehaviour {
 		
 		//Pretty save amount of Tris as well
 		ft=new int[(int)(cubeCount*.75)];
-
+		
 		newVertex=new Vector3[300000];
 		newTri=new int[300000];
 		newNormal=new Vector3[300000];
@@ -604,7 +574,7 @@ public class MCBlob: MonoBehaviour {
 			for(ijy=0;ijy<dimY;ijy++) {
 				for(ijz=0;ijz<dimZ;ijz++) {
 					
-									
+					
 					c=_cubes[i];
 					i++;
 					c.px=ijx; c.py=ijy; c.pz=ijz;
@@ -620,74 +590,74 @@ public class MCBlob: MonoBehaviour {
 					cpt[5]=getPoint(ijx+1,ijy,ijz+1);
 					cpt[6]=getPoint(ijx+1,ijy+1,ijz+1);
 					cpt[7]=getPoint(ijx,ijy+1,ijz+1);
-										
+					
 					
 					mcEdge[] e=c.edges;
-	
-								
+					
+					
 					e[5]=_edges[ep++];e[5].axisI=1;
 					e[6]=_edges[ep++];e[6].axisI=0;
 					e[10]=_edges[ep++];e[10].axisI=2;
 					
-				    tc=getCube(ijx+1,ijy,ijz);			   
-				    if(tc!=null) {tc.edges[11]=e[10];tc.edges[7]=e[5];}
-				    
-				    tc=getCube(ijx,ijy+1,ijz);
-				    if(tc!=null) {tc.edges[4]=c.edges[6];tc.edges[9]=c.edges[10];}
-				    
-				    tc=getCube(ijx,ijy+1,ijz+1);
-				    if(tc!=null) {tc.edges[0]=c.edges[6];}
-				    
-				    tc=getCube(ijx+1,ijy,ijz+1);
-				    if(tc!=null) {tc.edges[3]=c.edges[5];}
-				    
-				    tc=getCube(ijx+1,ijy+1,ijz);
-				    if(tc!=null) {tc.edges[8]=c.edges[10];}
-				    
-				    tc=getCube(ijx,ijy,ijz+1);
-				    if(tc!=null) {tc.edges[1]=c.edges[5];tc.edges[2]=c.edges[6];}
-				    
-				    if(e[0]==null) {
-				    	e[0]=_edges[ep++];e[0].axisI=0;
-				    }			    
-				    if(e[1]==null) {
-				    	e[1]=_edges[ep++];e[1].axisI=1;
-				    }			    
-				    if(e[2]==null) {
-				    	e[2]=_edges[ep++];e[2].axisI=0;
-				    } else { topo++; }
-				    if(e[3]==null) {
-				    	e[3]=_edges[ep++];e[3].axisI=1;
-				    }
-				    if(e[4]==null) {
-				    	e[4]=_edges[ep++];e[4].axisI=0;
-				    }
-				    if(e[7]==null) {
-				    	e[7]=_edges[ep++];e[7].axisI=1;
-				    }
-				    if(e[8]==null) {
-				    	e[8]=_edges[ep++];e[8].axisI=2;
-				    }
-				    if(e[9]==null) {
-				    	e[9]=_edges[ep++];e[9].axisI=2;
-				    }
-				    if(e[11]==null) {
-				    	e[11]=_edges[ep++];e[11].axisI=2;
-				    }
-				    
-				    
-				    
+					tc=getCube(ijx+1,ijy,ijz);			   
+					if(tc!=null) {tc.edges[11]=e[10];tc.edges[7]=e[5];}
+					
+					tc=getCube(ijx,ijy+1,ijz);
+					if(tc!=null) {tc.edges[4]=c.edges[6];tc.edges[9]=c.edges[10];}
+					
+					tc=getCube(ijx,ijy+1,ijz+1);
+					if(tc!=null) {tc.edges[0]=c.edges[6];}
+					
+					tc=getCube(ijx+1,ijy,ijz+1);
+					if(tc!=null) {tc.edges[3]=c.edges[5];}
+					
+					tc=getCube(ijx+1,ijy+1,ijz);
+					if(tc!=null) {tc.edges[8]=c.edges[10];}
+					
+					tc=getCube(ijx,ijy,ijz+1);
+					if(tc!=null) {tc.edges[1]=c.edges[5];tc.edges[2]=c.edges[6];}
+					
+					if(e[0]==null) {
+						e[0]=_edges[ep++];e[0].axisI=0;
+					}			    
+					if(e[1]==null) {
+						e[1]=_edges[ep++];e[1].axisI=1;
+					}			    
+					if(e[2]==null) {
+						e[2]=_edges[ep++];e[2].axisI=0;
+					} else { topo++; }
+					if(e[3]==null) {
+						e[3]=_edges[ep++];e[3].axisI=1;
+					}
+					if(e[4]==null) {
+						e[4]=_edges[ep++];e[4].axisI=0;
+					}
+					if(e[7]==null) {
+						e[7]=_edges[ep++];e[7].axisI=1;
+					}
+					if(e[8]==null) {
+						e[8]=_edges[ep++];e[8].axisI=2;
+					}
+					if(e[9]==null) {
+						e[9]=_edges[ep++];e[9].axisI=2;
+					}
+					if(e[11]==null) {
+						e[11]=_edges[ep++];e[11].axisI=2;
+					}
+					
+					
+					
 				}
 			}
 		}
-				
+		
 	}
-
+	
 	
 	
 	/*Courtesy of http://local.wasp.uwa.edu.au/~pbourke/geometry/polygonise/*/
 	private int[,]	triTable = new int[,]
-		{{-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+	{{-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
 		{0, 8, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
 		{0, 1, 9, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
 		{1, 8, 3, 9, 8, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
@@ -978,5 +948,5 @@ public class MCBlob: MonoBehaviour {
 		0xf00, 0xe09, 0xd03, 0xc0a, 0xb06, 0xa0f, 0x905, 0x80c,
 		0x70c, 0x605, 0x50f, 0x406, 0x30a, 0x203, 0x109, 0x0   };
 	
-		
+	
 }

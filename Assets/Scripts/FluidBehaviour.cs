@@ -181,7 +181,7 @@ public class FluidBehaviour : MonoBehaviour {
 		}
 	}
 
-	public void ShootFluid (Transform transform) {
+	public void ShootFluidParticles (Transform transform) {
 		foreach(Vector3 v in ParticleShot) {
             FluidParticle p = new FluidParticle(
 				transform.TransformPoint(v),
@@ -189,4 +189,12 @@ public class FluidBehaviour : MonoBehaviour {
 			NewParticles.Add(p);
 		}
 	}
+
+    public void ShootFluidParticle(Transform transform)
+    {
+        FluidParticle p = new FluidParticle(
+            transform.TransformPoint(Vector3.zero),
+            transform.forward / 2);
+        NewParticles.Add(p);
+    }
 }

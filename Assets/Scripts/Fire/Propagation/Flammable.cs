@@ -9,8 +9,8 @@ public class Flammable : MonoBehaviour {
     public delegate void OnFireEvent();
     public event OnFireEvent OnFire;
 
-    public int FULL_FLAMMABLE_HP = 50;
-    public int FULL_FIRE_HP = 80;
+    public const int FULL_FLAMMABLE_HP = 50;
+    public const int FULL_FIRE_HP = 80;
 
     public float cellSize = 0.3f;
     public float radius = 0.6f;
@@ -38,7 +38,7 @@ public class Flammable : MonoBehaviour {
         }
     }
 
-    public void RespondToFire(Vector3 position, float radius) {
+    public void RespondToFire() {
         if (fireGrid.Count == 0) {
             GenerateGrid();
         }
@@ -64,7 +64,7 @@ public class Flammable : MonoBehaviour {
                         fireGrid.Add(cell);
 
                         if (i % 2 == 0) {
-                            cell.active = false;
+                            //cell.active = false;
                         }
 
                         if (i == cellToIgnite) {

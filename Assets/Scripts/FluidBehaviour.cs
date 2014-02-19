@@ -13,7 +13,7 @@ public class FluidBehaviour : MonoBehaviour {
     private const float RELAXATION_CONSTANT = 0.1f;
 	private int ParticleCount = 0;
     private const float NEIGHBOUR_DISTANCE = LAYER_OFFSET;
-	private const float ENERGY_LOSS_ON_BOUNCE = 0.01f;
+	private const float PARTICLE_ELASTICITY = 0.1f;
     private const int SOLVER_ITERATIONS = 4;
 
 	public FluidBehaviour() {
@@ -64,7 +64,7 @@ public class FluidBehaviour : MonoBehaviour {
 				if (hit.normal.y != 0) {
 					p.Velocity.y += GRAVITY;
 				}
-				p.Velocity = Vector3.Reflect(p.Velocity * ENERGY_LOSS_ON_BOUNCE, hit.normal);
+				p.Velocity = Vector3.Reflect(p.Velocity * PARTICLE_ELASTICITY, hit.normal);
 				newPosition = p.Position + p.Velocity;
 			}
 			p.PredictedPosition = newPosition;

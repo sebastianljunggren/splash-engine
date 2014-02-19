@@ -9,13 +9,13 @@ public class FluidBehaviour : MonoBehaviour {
 	private const float LAYER_OFFSET = 0.5f;
 	private const float GRAVITY = 0.005f;
 	private const int LAYERS_IN_SHOT = 5;
+    private const float REST_DENSITY = 50f;
+    private const float RELAXATION_CONSTANT = 0.1f;
+	private int ParticleCount = 0;
 	private const int CIRCLES_IN_SHOT = 3;
     private const float NEIGHBOUR_DISTANCE = LAYER_OFFSET;
 	private const float ENERGY_LOSS_ON_BOUNCE = 0.01f;
     private const int SOLVER_ITERATIONS = 4;
-    private const float REST_DENSITY = 50f / NEIGHBOUR_DISTANCE;
-    private const float RELAXATION_CONSTANT = 0.1f;
-	private int ParticleCount = 0;
 
 	public FluidBehaviour() {
 		this.Particles = new List<FluidParticle>();

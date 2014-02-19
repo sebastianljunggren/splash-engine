@@ -5,14 +5,13 @@ public class FluidBehaviour : MonoBehaviour {
 
 	public List<FluidParticle> Particles;
     public List<FluidParticle> NewParticles;
-	private List<Vector3> ParticleRow;
+	private List<Vector3> ParticleShot;
 	private const float LAYER_OFFSET = 0.5f;
 	private const float GRAVITY = 0.005f;
-	private const int LAYERS_IN_SHOT = 5;
+    private const int PARTICLE_DIAMETER_IN_SHOT = 5;
     private const float REST_DENSITY = 50f;
     private const float RELAXATION_CONSTANT = 0.1f;
 	private int ParticleCount = 0;
-	private const int CIRCLES_IN_SHOT = 3;
     private const float NEIGHBOUR_DISTANCE = LAYER_OFFSET;
 	private const float ENERGY_LOSS_ON_BOUNCE = 0.01f;
     private const int SOLVER_ITERATIONS = 4;
@@ -20,23 +19,24 @@ public class FluidBehaviour : MonoBehaviour {
 	public FluidBehaviour() {
 		this.Particles = new List<FluidParticle>();
         this.NewParticles = new List<FluidParticle>();
-		int layerMultiplier = 3;
-		int particlesInLayer = 1;
-		ParticleRow = new List<Vector3>();
-		particlesInLayer = 1;
-		int particle = 0;
-		for (int layer = 0; layer < CIRCLES_IN_SHOT; layer++) {
-			for (int i = 0; i < particlesInLayer; i++, particle++) {
-				float rotation = (2 * Mathf.PI / particlesInLayer) * i;
-				ParticleRow.Add(new Vector3(
-					Mathf.Cos(rotation) * LAYER_OFFSET * layer,
-					Mathf.Sin(rotation) * LAYER_OFFSET * layer + 0.5f,
-					0
-				));
-			}
-			particlesInLayer *= layerMultiplier;
+		this.ParticleShot = new List<Vector3>();
+        float radius = 0.5f * LAYER_OFFSET * PARTICLE_DIAMETER_IN_SHOT;
+        //  Create cube with points
+		for (int x = 0; x < PARTICLE_DIAMETER_IN_SHOT; x++) {
+            for (int y = 0; y < PARTICLE_DIAMETER_IN_SHOT; y++)
+            {
+                for (int z = 0; z < PARTICLE_DIAMETER_IN_SHOT; z++)
+                {
+                    Vector3 v = new Vector3(x * LAYER_OFFSET - radius, y * LAYER_OFFSET - radius, z * LAYER_OFFSET);
+                    this.ParticleShot.Add(v);
+                }
+
+            }
 		}
-	}
+        Vector3 center = new Vector3(0, 0, radius);
+        // Create sphere shape for shot by removing points
+       this.ParticleShot.RemoveAll(point => Vector3.Distance(point, center) > (radius + 0.1f * LAYER_OFFSET) );
+    }
 
 	void FixedUpdate () {
 		// Remove all particles that have fallen below the level.
@@ -182,15 +182,11 @@ public class FluidBehaviour : MonoBehaviour {
 	}
 
 	public void ShootFluid (Transform transform) {
-		for (int i = 0; i < LAYERS_IN_SHOT; i++) {
-			foreach(Vector3 v in ParticleRow) {
-                //Vector3 v = ParticleRow[0];
-                //int i = 0;
-                FluidParticle p = new FluidParticle(
-					transform.TransformPoint(v + new Vector3(0, 0 , LAYER_OFFSET * i)),
-					transform.forward / 2);
-				NewParticles.Add(p);
-			}
+		foreach(Vector3 v in ParticleShot) {
+            FluidParticle p = new FluidParticle(
+				transform.TransformPoint(v),
+				transform.forward / 2);
+			NewParticles.Add(p);
 		}
 	}
 }

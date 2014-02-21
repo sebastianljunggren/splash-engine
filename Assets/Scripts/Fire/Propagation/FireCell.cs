@@ -20,7 +20,13 @@ public class FireCell : MonoBehaviour {
     }
 
     void Update() {
-        //Debug.DrawRay(transform.position, Vector3.forward * 1, Color.green);
+        //transform.LookAt(parent.transform.forward);
+        //Debug.DrawRay(transform.position, -transform.forward, Color.green);
+        
+        //Vector3[] normals = parent.GetComponent<MeshFilter>().mesh.normals;
+        //foreach (Vector3 normal in normals) {
+        //    Debug.DrawRay(transform.position, normal, Color.green);
+        //}
     }
 
     public void FireDamage() {
@@ -37,9 +43,12 @@ public class FireCell : MonoBehaviour {
 
     public void WaterDamage() {
         if (active && isBurning) {
+            // TODO: Remove, temporarily extinguish fire immediately 
+            ExtinguishFire();
+
             fireHp -= 20;
 
-            // Decrease fire intensity
+            // TODO: Decrease fire intensity
 
             if (fireHp <= 0) {
                 ExtinguishFire();
@@ -52,12 +61,14 @@ public class FireCell : MonoBehaviour {
 
         transform.parent = parent.transform;
 
+        // Set the hp to default values
         flammableHp = Flammable.FULL_FLAMMABLE_HP;
         fireHp = Flammable.FULL_FIRE_HP;
     }
 
     public void StartFire() {
         if (active) {
+            // Assure it is burning
             flammableHp = 0;
             isBurning = true;
 
@@ -68,26 +79,34 @@ public class FireCell : MonoBehaviour {
                 fire.transform.parent = transform;
             }
 
+            // Add event method
             parent.OnFire += Burning;
         }
     }
 
     public void ExtinguishFire() {
         if (active) {
+            // Assure it's extinguished
             fireHp = 0;
             isBurning = false;
             flammableHp = Flammable.FULL_FLAMMABLE_HP;
 
-            // Remove fire prefab
+            // Deactivate cell so it cannot ignite again
+            active = false;
 
+            // TODO: Fine a better solution for this
+            fire.active = false;
+
+            // Remove event method
             parent.OnFire -= Burning;
         }
     }
 
     public void Burning() {
         if (active) {
-            // Increase fire intensity
+            // TODO: Increase fire intensity
 
+            // Get all surrounding objects
             Collider[] closeObjects = Physics.OverlapSphere(
                 transform.position * Random.Range(0.6f, 1.3f),
                 parent.radius * Random.Range(0.2f, 1.0f));
@@ -98,9 +117,11 @@ public class FireCell : MonoBehaviour {
                     Flammable flammable = obj.GetComponent<Flammable>();
                     FireCell cell = obj.GetComponent<FireCell>();
 
+                    // Is it a FireCell?
                     if (cell != null) {
                         cell.FireDamage();
                     }
+                    // Is it a Flammable?
                     else if (flammable != null) {
                         flammable.RespondToFire();
                     }
@@ -129,7 +150,6 @@ public class FireCell : MonoBehaviour {
     void OnDrawGizmos() {
         if (isBurning) {
             Gizmos.color = Color.red;
-            //Gizmos.DrawWireSphere(transform.position, 2f);
         }
 
         if (drawGizmos) {

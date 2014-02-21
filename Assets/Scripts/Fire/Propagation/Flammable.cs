@@ -14,9 +14,8 @@ public class Flammable : MonoBehaviour {
 
     public float cellSize = 0.3f;
     public float radius = 0.6f;
-    public bool grid2D = true;
 
-    // Temp
+    // TODO: Remove, temporarily
     public int cellToIgnite = 1;
     public bool ignite = false;
     private bool burning = false;
@@ -26,6 +25,7 @@ public class Flammable : MonoBehaviour {
     }
 
 	void Update () {
+        // TODO: Remove, temporarily control if the object should ignite
         if (!burning && ignite) {
             GenerateGrid();
             burning = true;
@@ -33,6 +33,7 @@ public class Flammable : MonoBehaviour {
 	}
 
     void UpdateSpread() {
+        // Trigger event to all burning cell
         if (OnFire != null) {
             OnFire();
         }
@@ -49,6 +50,7 @@ public class Flammable : MonoBehaviour {
         Vector3 min = meshBounds.min;
         Vector3 max = meshBounds.max;
 
+        // TODO: Remove, temporarily
         int i = 0;
 
         for (float x = min.x; x <= max.x; x = x + cellSize) {
@@ -57,9 +59,10 @@ public class Flammable : MonoBehaviour {
                     Vector3 pos = new Vector3(x, y, z);
                     i++;
 
+                    // TODO: Which should be used?
                     //if (meshBounds.Contains(pos)) {
                     if (positionInsideThis(pos)) {
-                        FireCell cell = (FireCell)Instantiate(fireCell, pos, transform.rotation);
+                        FireCell cell = (FireCell) Instantiate(fireCell, pos, transform.rotation);
                         cell.Instantiate(this);
                         fireGrid.Add(cell);
 

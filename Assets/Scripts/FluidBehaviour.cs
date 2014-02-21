@@ -66,6 +66,11 @@ public class FluidBehaviour : MonoBehaviour {
 				}
 				p.Velocity = Vector3.Reflect(p.Velocity * PARTICLE_ELASTICITY, hit.normal);
 				newPosition = p.Position + p.Velocity;
+
+                FireCell fireCell = hit.collider.GetComponent<FireCell>();
+                if (fireCell != null) {
+                    fireCell.WaterDamage();
+                }
 			}
 			p.PredictedPosition = newPosition;
 		}

@@ -40,7 +40,7 @@ public class FluidBehaviour : MonoBehaviour {
 
 	void FixedUpdate () {
 		// Remove all particles that have fallen below the level.
-		Particles.RemoveAll(p => p.Position.y < -1);
+		Particles.RemoveAll(p => p.ToBeRemoved || (p.Position.y < -1) || p.Expiry <= 0);
 
         // Add new particles
         Particles.AddRange(NewParticles);
@@ -139,11 +139,12 @@ public class FluidBehaviour : MonoBehaviour {
             }
         }
 
-        // Actually set the new positions
+        // Actually set the new positions and count down the expiry of the particles.
         foreach (FluidParticle p in Particles)
         {
             p.Velocity = p.PredictedPosition - p.Position;
             p.Position = p.PredictedPosition;
+            p.Expiry--;
         }        
 	}
 

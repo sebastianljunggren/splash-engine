@@ -18,8 +18,6 @@ public class FireCell : MonoBehaviour {
 
     void Start() {
         transform.localScale = new Vector3(parent.cellSize, parent.cellSize, parent.cellSize);
-
-        this.gameObject.layer = 1 << 8;
     }
 
     void Update() {

@@ -9,7 +9,7 @@ public class FireCell : MonoBehaviour {
     public FireBehaviour firePrefab;
     public bool active = true;
 
-    private bool drawGizmos = true;
+    private bool drawGizmos = false;
     private const int damage = 20;
 
     private int flammableHp;
@@ -17,8 +17,6 @@ public class FireCell : MonoBehaviour {
 
     void Start() {
         transform.localScale = new Vector3(parent.cellSize, parent.cellSize, parent.cellSize);
-
-        this.gameObject.layer = 1 << 8;
     }
 
     void Update() {

@@ -73,7 +73,7 @@ namespace WaypointGeneration {
             RaycastHit hit;
             
             Vector3 direction = target - current;
-            if (Physics.Raycast(current, direction, out hit, 100.0F, ~(1 << 8))) {
+            if (Physics.Raycast(current, direction, out hit, 100.0F, ~(1 << 2))) {
                 float distance = hit.distance;
 
                 if (distance < direction.magnitude) {
@@ -81,7 +81,7 @@ namespace WaypointGeneration {
                 }
             }
             // The other way around to get around the problem of sending a raycast from inside a collider
-            if (Physics.Raycast(target, -direction, out hit, 100.0F, ~(1 << 8))) {
+            if (Physics.Raycast(target, -direction, out hit, 100.0F, ~(1 << 2))) {
                 float distance = hit.distance;
 
                 if (distance < direction.magnitude) {

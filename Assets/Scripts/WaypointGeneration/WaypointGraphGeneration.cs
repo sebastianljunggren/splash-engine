@@ -40,10 +40,7 @@ namespace WaypointGeneration {
                 }
             }
 
-            for (int i = 0; i < edges.Count; i++) {
-                Debug.DrawLine(edges[i].first.position, edges[i].second.position, Color.green, 100);
-
-            }
+            
 
             Debug.Log("Generation done! N: " + nodes.Count + ", E: " + edges.Count);
 
@@ -61,9 +58,9 @@ namespace WaypointGeneration {
 
                         Vector3 perp = Vector3.Cross(current.position - target.position, Vector3.up);
                         perp.Normalize();
-                        if (IsRaycastColliding(current.position + perp * halfWidth, target.position + perp * halfWidth)
-                                && IsRaycastColliding(current.position, target.position)
-                                && IsRaycastColliding(current.position - perp * halfWidth, target.position - perp * halfWidth)) {
+                        if (!IsRaycastColliding(current.position + perp * halfWidth, target.position + perp * halfWidth)
+                                && !IsRaycastColliding(current.position, target.position)
+                                && !IsRaycastColliding(current.position - perp * halfWidth, target.position - perp * halfWidth)) {
                             edges.Add(new WaypointEdge(current, target));
                         }
 
@@ -78,11 +75,30 @@ namespace WaypointGeneration {
             Vector3 direction = target - current;
             if (Physics.Raycast(current, direction, out hit, 100.0F, ~(1 << 8))) {
                 float distance = hit.distance;
-                if (distance >= direction.magnitude) {
+
+                if (distance < direction.magnitude) {
+                    return true;
+                }
+            }
+            // The other way around to get around the problem of sending a raycast from inside a collider
+            if (Physics.Raycast(target, -direction, out hit, 100.0F, ~(1 << 8))) {
+                float distance = hit.distance;
+
+                if (distance < direction.magnitude) {
                     return true;
                 }
             }
             return false;
+        }
+
+        void OnDrawGizmos() {
+            if (edges != null) {
+                for (int i = 0; i < edges.Count; i++) {
+                    Gizmos.color = Color.green;
+                    Gizmos.DrawLine(edges[i].first.position, edges[i].second.position);
+
+                }
+            }
         }
     }
 

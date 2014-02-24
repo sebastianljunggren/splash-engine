@@ -31,8 +31,17 @@ public class PathfindingBehaviour : MonoBehaviour {
         charController = GetComponent<CharacterController>();
 
         waypointTarget = cachedTransform.position;
+
+        gameWorld.WaypointGraphUpdated += new WaypointGraphUpdatedEvent(gameWorld_WaypointGraphUpdated);
 	}
-	
+
+    public void gameWorld_WaypointGraphUpdated() {
+        if (Target.Length > 0) {
+            Debug.Log("WaypointGraphUpdated: " + Target);
+            StartJourney(Target);
+        }
+    }
+
 	// Update is called once per frame
 	void Update () {
 		Vector3 distance = waypointTarget - cachedTransform.position;
@@ -51,9 +60,9 @@ public class PathfindingBehaviour : MonoBehaviour {
             waypointIndex++;
             MoveTo(currentWaypoints[waypointIndex].position);
         }
-        else if (CurrentRoom == Target) {
-            RoomReached(CurrentRoom);
-        }
+        
+        RoomReached(CurrentRoom);
+        
 	}
 
     public void RoomReached(string room) {
@@ -76,7 +85,7 @@ public class PathfindingBehaviour : MonoBehaviour {
         if (CurrentRoom != objectName) {
 
             currentWaypoints = gameWorld.ShortestPath(cachedTransform.position, GameObject.Find(objectName).transform.position);
-
+            Debug.Log("currentWaypoints: " + currentWaypoints.Length);
             if (currentWaypoints.Length > 0) {
                 for (int i = 0; i < currentWaypoints.Length - 1; i++) {
                     Debug.DrawLine(currentWaypoints[i].position, currentWaypoints[i + 1].position, Color.red, 5);

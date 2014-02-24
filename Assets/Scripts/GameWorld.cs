@@ -5,15 +5,31 @@ using System.Collections.ObjectModel;
 
 using WaypointGeneration;
 
+public delegate void WaypointGraphUpdatedEvent();
+
 [RequireComponent(typeof(WaypointGraphGeneration))]
 public class GameWorld : MonoBehaviour {
 
     private WaypointGraph graph;
+    public event WaypointGraphUpdatedEvent WaypointGraphUpdated;
 
     // Use this for initialization
     void Start() {
         Debug.Log("GameWorld Start");
 
+        UpdateWaypointGraph();
+    }
+
+    void Update() {
+        if (Input.GetKey(KeyCode.G)) {
+            Debug.Log("GenerateGraph");
+            UpdateWaypointGraph();
+
+            WaypointGraphUpdated();
+        }
+    }
+
+    public void UpdateWaypointGraph() {
         graph = GetComponent<WaypointGraphGeneration>().GenerateGraph();
 
         foreach (var edge in graph.Edges) {

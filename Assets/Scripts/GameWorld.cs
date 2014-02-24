@@ -17,7 +17,9 @@ public class GameWorld : MonoBehaviour {
     void Start() {
         Debug.Log("GameWorld Start");
 
-        UpdateWaypointGraph();
+        //UpdateWaypointGraph();
+
+        InvokeRepeating("UpdateWaypointGraph", 0f, 1f);
     }
 
     void Update() {

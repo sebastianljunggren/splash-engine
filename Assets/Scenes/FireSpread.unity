@@ -121,8 +121,6 @@ MonoBehaviour:
   fireCell: {fileID: 11400000, guid: 34cbb23ae5e136f4f8d6d217a814417d, type: 2}
   cellSize: .300000012
   radius: .600000024
-  grid2D: 1
-  cellToIgnite: 251
   ignite: 0
 --- !u!23 &240422144
 Renderer:
@@ -508,8 +506,6 @@ MonoBehaviour:
   fireCell: {fileID: 11400000, guid: 34cbb23ae5e136f4f8d6d217a814417d, type: 2}
   cellSize: .300000012
   radius: .600000024
-  grid2D: 1
-  cellToIgnite: 251
   ignite: 1
 --- !u!23 &857363522
 Renderer:
@@ -960,8 +956,6 @@ MonoBehaviour:
   fireCell: {fileID: 11400000, guid: 34cbb23ae5e136f4f8d6d217a814417d, type: 2}
   cellSize: .300000012
   radius: .600000024
-  grid2D: 1
-  cellToIgnite: 251
   ignite: 0
 --- !u!23 &1334184170
 Renderer:
@@ -1038,8 +1032,6 @@ MonoBehaviour:
   fireCell: {fileID: 11400000, guid: 34cbb23ae5e136f4f8d6d217a814417d, type: 2}
   cellSize: .300000012
   radius: .600000024
-  grid2D: 0
-  cellToIgnite: 1
   ignite: 0
 --- !u!65 &1954663557
 BoxCollider:

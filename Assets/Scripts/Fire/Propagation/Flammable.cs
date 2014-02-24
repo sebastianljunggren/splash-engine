@@ -15,21 +15,22 @@ public class Flammable : MonoBehaviour {
     public float cellSize = 0.3f;
     public float radius = 0.6f;
 
-    // TODO: Remove, temporarily
-    public int cellToIgnite = 1;
     public bool ignite = false;
-    private bool burning = false;
 
     void Start() {
         InvokeRepeating("UpdateSpread", 0f, 1.0f);
+
+        // Control if the object should ignite
+        if (ignite) {
+            GenerateGrid();
+
+            // Start a fire at a random position
+            fireGrid[Random.Range(0, fireGrid.Count - 1)].StartFire();
+        }
     }
 
 	void Update () {
-        // TODO: Remove, temporarily control if the object should ignite
-        if (!burning && ignite) {
-            GenerateGrid();
-            burning = true;
-        }
+
 	}
 
     void UpdateSpread() {
@@ -50,14 +51,10 @@ public class Flammable : MonoBehaviour {
         Vector3 min = meshBounds.min;
         Vector3 max = meshBounds.max;
 
-        // TODO: Remove, temporarily
-        int i = 0;
-
         for (float x = min.x; x <= max.x; x = x + cellSize) {
             for (float y = min.y; y <= max.y; y = y + cellSize) {
                 for (float z = min.z; z <= max.z; z = z + cellSize) {
                     Vector3 pos = new Vector3(x, y, z);
-                    i++;
 
                     // TODO: Which should be used?
                     //if (meshBounds.Contains(pos)) {
@@ -65,14 +62,6 @@ public class Flammable : MonoBehaviour {
                         FireCell cell = (FireCell) Instantiate(fireCell, pos, transform.rotation);
                         cell.Instantiate(this);
                         fireGrid.Add(cell);
-
-                        if (i % 2 == 0) {
-                            //cell.active = false;
-                        }
-
-                        if (i == cellToIgnite) {
-                            cell.StartFire();
-                        }
                     }
                 }
             }

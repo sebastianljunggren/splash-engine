@@ -9,8 +9,8 @@ public class Flammable : MonoBehaviour {
     public delegate void OnFireEvent();
     public event OnFireEvent OnFire;
 
-    public const int FULL_FLAMMABLE_HP = 50;
-    public const int FULL_FIRE_HP = 80;
+    public int fullFlammableHp = 50;
+    public int fullFireHp = 80;
 
     public float cellSize = 0.3f;
     public float radius = 0.6f;

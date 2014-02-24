@@ -31,9 +31,20 @@ public class FireCell : MonoBehaviour {
         //}
     }
 
+    public void Instantiate(Flammable parent) {
+        this.parent = parent;
+
+        // Follow the parent
+        transform.parent = parent.transform;
+
+        // Set the hp to default values
+        flammableHp = parent.fullFlammableHp;
+        fireHp = parent.fullFireHp;
+    }
+
     public void FireDamage() {
         if (active && !isBurning) {
-            flammableHp -= 20;
+            flammableHp -= damage;
 
             isBurning = flammableHp <= 0;
 
@@ -45,10 +56,7 @@ public class FireCell : MonoBehaviour {
 
     public void WaterDamage() {
         if (active && isBurning) {
-            // TODO: Remove, temporarily extinguish fire immediately 
-            ExtinguishFire();
-
-            fireHp -= 20;
+            fireHp -= damage;
 
             // TODO: Decrease fire intensity
 
@@ -56,16 +64,6 @@ public class FireCell : MonoBehaviour {
                 ExtinguishFire();
             }
         }
-    }
-
-    public void Instantiate(Flammable parent) {
-        this.parent = parent;
-
-        transform.parent = parent.transform;
-
-        // Set the hp to default values
-        flammableHp = Flammable.FULL_FLAMMABLE_HP;
-        fireHp = Flammable.FULL_FIRE_HP;
     }
 
     public void StartFire() {
@@ -94,7 +92,7 @@ public class FireCell : MonoBehaviour {
             // Assure it's extinguished
             fireHp = 0;
             isBurning = false;
-            flammableHp = Flammable.FULL_FLAMMABLE_HP;
+            flammableHp = parent.fullFlammableHp;
 
             // Deactivate cell so it cannot ignite again
             active = false;
@@ -159,8 +157,7 @@ public class FireCell : MonoBehaviour {
 
         if (drawGizmos) {
             Gizmos.DrawWireCube(transform.position, new Vector3(parent.cellSize, parent.cellSize, parent.cellSize));
+            Gizmos.color = Color.white;
         }
-
-        Gizmos.color = Color.white;
     }
 }

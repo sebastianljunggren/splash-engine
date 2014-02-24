@@ -182,7 +182,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a2032a8135dc6be47acaf3eb4b88de19, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -.523921132
+      value: 2.86636305
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a2032a8135dc6be47acaf3eb4b88de19, type: 2}
       propertyPath: m_LocalRotation.x
@@ -202,7 +202,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: a2032a8135dc6be47acaf3eb4b88de19, type: 2}
       propertyPath: ignite
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a2032a8135dc6be47acaf3eb4b88de19, type: 2}
       propertyPath: m_LocalScale.x
@@ -510,7 +510,7 @@ MonoBehaviour:
   fullFireHp: 80
   cellSize: .300000012
   radius: .600000024
-  ignite: 0
+  ignite: 1
 --- !u!23 &857363522
 Renderer:
   m_ObjectHideFlags: 0
@@ -1040,7 +1040,7 @@ MonoBehaviour:
   fullFireHp: 80
   cellSize: .300000012
   radius: .600000024
-  ignite: 1
+  ignite: 0
 --- !u!65 &1954663557
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1091,7 +1091,7 @@ Transform:
   m_PrefabInternal: {fileID: 301268251}
   m_GameObject: {fileID: 1954663555}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.82145262, y: 2.18124008, z: -.523921132}
+  m_LocalPosition: {x: 1.82145262, y: 2.18124008, z: 2.86636305}
   m_LocalScale: {x: 1.16385651, y: 1.16385651, z: 1.16385651}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1132,7 +1132,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: bfd1e5faa74caa541926203500ba6359, type: 2}
       propertyPath: ignite
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: bfd1e5faa74caa541926203500ba6359, type: 2}
       propertyPath: m_LocalScale.x

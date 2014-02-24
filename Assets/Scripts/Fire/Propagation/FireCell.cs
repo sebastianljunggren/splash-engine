@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.IO;
 
 public class FireCell : MonoBehaviour {
     private bool isBurning = false;
@@ -9,7 +10,7 @@ public class FireCell : MonoBehaviour {
     public FireBehaviour firePrefab;
     public bool active = true;
 
-    private bool drawGizmos = true;
+    private bool drawGizmos = false;
     private const int damage = 20;
 
     private int flammableHp;
@@ -149,6 +150,40 @@ public class FireCell : MonoBehaviour {
             //}
         }
     }
+
+    public void Water() {
+        if (active) {
+            WaterDamage();
+
+            // Get all surrounding objects
+            Collider[] closeObjects = Physics.OverlapSphere(transform.position, parent.radius);
+
+            foreach (Collider obj in closeObjects) {
+                // Check if it collides with itself
+                if (obj.collider != transform.collider && obj.collider != parent.collider) {
+                    FireCell cell = obj.GetComponent<FireCell>();
+
+                    if (cell != null) {
+                        cell.WaterDamage();
+                    }
+                }
+            }
+        }
+    }
+
+    //private IEnumerable CloseObjects() {
+    //    // Get all surrounding objects
+    //    Collider[] closeObjects = Physics.OverlapSphere(
+    //        transform.position * Random.Range(0.6f, 1.3f),
+    //        parent.radius * Random.Range(0.2f, 1.0f));
+
+    //    foreach (Collider col in closeObjects) {
+    //        // Check if it collides with itself
+    //        if (col.collider != transform.collider && col.collider != parent.collider) {
+    //            yield return col;
+    //        }
+    //    }
+    //}
 
     void OnDrawGizmos() {
         if (isBurning) {

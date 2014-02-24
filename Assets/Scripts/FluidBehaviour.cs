@@ -70,6 +70,7 @@ public class FluidBehaviour : MonoBehaviour {
                 FireCell fireCell = hit.collider.GetComponent<FireCell>();
                 if (fireCell != null) {
                     fireCell.WaterDamage();
+                    p.ToBeRemoved = true;
                 }
 			}
 			p.PredictedPosition = newPosition;

@@ -25,6 +25,8 @@ using UnityEngine;
 using System.Collections;
 
 public class MCBlob: MonoBehaviour {
+
+	public static float POWER = .25f;
 	
 	/*Amount of cubes in X/Y/Z directions, Dimension will always be from -.5f to .5f in XYZ
 	  remember to call Regen() if changing!
@@ -47,10 +49,10 @@ public class MCBlob: MonoBehaviour {
 	}
 	/*Blobs are a staggered array of floats, where first index is blob, and second is 0=x, 1=y 2=z 3=power
 	  Multidim might be slightly faster, but staggered made the code a little cleaner IMO*/
-	public float[][] blobs;
+	//public float[][] blobs;
 	
 	/*Cutoff intensity, where the surface of mesh will be created*/
-	public float isoLevel=.5f;	
+	public float isoLevel=.5f;
 	
 	/*Scratch buffers for Vertices/Normals/Tris */
 	private Vector3[] newVertex;
@@ -185,9 +187,10 @@ public class MCBlob: MonoBehaviour {
 			if(cntr<mcblob.pctr) {
 				cntr=mcblob.pctr;
 				pwr=0f;
-				for(int jc=0;jc<this.mcblob.blobs.Length;jc++) {
-					float[] pb=this.mcblob.blobs[jc];					
-					pwr+=(1.0f/Mathf.Sqrt(((pb[0]-this.x)*(pb[0]-this.x))+((pb[1]-this.y)*(pb[1]-this.y))+((pb[2]-this.z)*(pb[2]-this.z))))*pb[3];
+				var blobs = this.mcblob.GetComponent<FluidBehaviour>().Particles;
+				for(int jc=0;jc<blobs.Count;jc++) {
+					FluidParticle pb=blobs[jc];					
+					pwr+=(1.0f/Mathf.Sqrt(((pb.Position.x-this.x)*(pb.Position.x-this.x))+((pb.Position.y-this.y)*(pb.Position.y-this.y))+((pb.Position.z-this.z)*(pb.Position.z-this.z))))* POWER; // CONSTANT
 				}
 				this._i=pwr;
 			}
@@ -216,16 +219,17 @@ public class MCBlob: MonoBehaviour {
 		int jc;
 		Vector3 result=tada[tadac++];
 		result.x=0;result.y=0;result.z=0;
-		for(jc=0;jc<blobs.Length;jc++)
+		var blobs = GetComponent<FluidBehaviour>().Particles;
+		for(jc=0;jc<blobs.Count;jc++)
 		{
-			float[] pb=blobs[jc];
+			FluidParticle pb=blobs[jc];
 			
 			Vector3 current=tada[tadac++];
-			current.x=pnt.x-pb[0];
-			current.y=pnt.y-pb[1];
-			current.z=pnt.z-pb[2];
+			current.x=pnt.x-pb.Position.x;
+			current.y=pnt.y-pb.Position.y;
+			current.z=pnt.z-pb.Position.z;
 			float mag=current.magnitude;
-			float pwr=.5f*(1f/(mag*mag*mag))*pb[3];			
+			float pwr=.5f*(1f/(mag*mag*mag))* POWER; // CONSTANT			
 			result=result+(current*pwr);			
 		}
 		return result.normalized;
@@ -370,12 +374,13 @@ public class MCBlob: MonoBehaviour {
 	private void march()
 	{
 		int i,jx,jy,jz;
-		for(i=0;i<blobs.Length;i++)
+		var blobs = GetComponent<FluidBehaviour> ().Particles;
+		for(i=0;i<blobs.Count;i++)
 		{
-			float[] pb=blobs[i];
-			jx=(int)((pb[0]+.5f)*dimX);
-			jy=(int)((pb[1]+.5f)*dimY);
-			jz=(int)((pb[2]+.5f)*dimZ);
+			FluidParticle pb=blobs[i];
+			jx=(int)((pb.Position.x+.5f)*dimX);
+			jy=(int)((pb.Position.y+.5f)*dimY);
+			jz=(int)((pb.Position.z+.5f)*dimZ);
 			
 			
 			while(jz>=0)
@@ -467,9 +472,10 @@ public class MCBlob: MonoBehaviour {
 	}
 	
 	/*Regenerate Lattice and Connections, when changing Dimensions of Lattice*/
-	void Regen() {
+	public void Regen() {
 		startObjs();	
-		startEngine();	
+		startEngine();
+		Debug.Log ("regen");
 	}
 	
 	
@@ -494,13 +500,19 @@ public class MCBlob: MonoBehaviour {
 	//Unity and Sample Specific
 	void Start () {
 		lt=0f;
-		blobs = new float[2][];
+		//blobs = new float[2][];
 
-        blobs[0]=new float[]{-.25f,0,0,.3f};
-		blobs[1]=new float[]{.25f,0,0,.2f};
+        //blobs[0]=new float[]{-.25f,0,0,.3f};
+		//blobs[1]=new float[]{.25f,0,0,.2f};
         //blobs[2]=new float[]{-.18f,.125f,-.25f,.16f};
         //blobs[3]=new float[]{-.13f,.23f,.255f,.13f};		
         //blobs[4]=new float[]{-.18f,.125f,.35f,.12f};
+
+		Debug.Log ("MCBlob");
+		for (int i = 0; i < this.GetComponent<FluidBehaviour> ().Particles.Count; i++) {
+			Debug.Log (this.GetComponent<FluidBehaviour> ().Particles[i].Position);
+		}
+
 	    
 	    Regen();
 	}

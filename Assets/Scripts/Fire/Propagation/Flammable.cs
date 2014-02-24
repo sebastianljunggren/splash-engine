@@ -56,8 +56,6 @@ public class Flammable : MonoBehaviour {
                 for (float z = min.z; z <= max.z; z = z + cellSize) {
                     Vector3 pos = new Vector3(x, y, z);
 
-                    // TODO: Which should be used?
-                    //if (meshBounds.Contains(pos)) {
                     if (positionInsideThis(pos)) {
                         FireCell cell = (FireCell) Instantiate(fireCell, pos, transform.rotation);
                         cell.Instantiate(this);

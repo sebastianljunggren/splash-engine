@@ -3,12 +3,13 @@ using System.Collections;
 
 public class AgentManager : MonoBehaviour {
 
-
+    
     private AgentBehaviour[] agents;
     private RoomInformation[] rooms;
 
+    public PlayerBehaviour player;
     public GameWorld world;
-    public enum AgentState { SEARCH, DIVIDE }
+    public enum AgentState { SEARCH }
     public AgentState agentState;
 
 	// Use this for initialization
@@ -20,6 +21,8 @@ public class AgentManager : MonoBehaviour {
             agent.Pathfinding.TargetReached += new TargetReachedEvent(Pathfinding_TargetReached);
 
         }
+
+        player.TargetReached += new TargetReachedEvent(Pathfinding_TargetReached);
 	}
 	
 	// Update is called once per frame
@@ -29,9 +32,6 @@ public class AgentManager : MonoBehaviour {
         
             case AgentState.SEARCH:
                 stateSearch();
-                break;
-            case AgentState.DIVIDE:
-                stateDivide();
                 break;
                 
         }
@@ -58,16 +58,10 @@ public class AgentManager : MonoBehaviour {
 
                 if (nearestAgent != null) {
                     nearestAgent.Pathfinding.StartJourney(rooms[i].name);
-                    //Debug.Log(nearestAgent.name + ": " + rooms[i].name);
                 }
             }
         }
 
-
-        if (allRoomsDiscovered()) {
-            //agentState = AgentState.DIVIDE;
-            
-        }
     }
 
     private AgentBehaviour findNearestAgent(Vector3 position) {
@@ -112,23 +106,20 @@ public class AgentManager : MonoBehaviour {
 
     }
 
-    private void stateDivide() {
-        
-    }
-
     public void Pathfinding_TargetReached(object source, string arg) {
         //Debug.Log(source + " " + arg);
 
 
         for (int i = 0; i < rooms.Length; i++) {
-            if (rooms[i].name.Equals(arg) && !rooms[i].IsDiscovered) {
+            if (rooms[i].name.Equals(arg)) {
                 // Newly discovered room
-                rooms[i].IsDiscovered = true;
-
+                if (source is PathfindingBehaviour) {
+                    rooms[i].IsDiscovered = true;
+                }
+                
                 // Divide the agents once more based on the new data.
                 divideAgents();
                 Debug.Log("Dividing the agents");
-
             }
             //Debug.Log(rooms[i].name + ": " + rooms[i].IsDiscovered);
         }

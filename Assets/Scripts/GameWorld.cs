@@ -19,7 +19,7 @@ public class GameWorld : MonoBehaviour {
 
         //UpdateWaypointGraph();
 
-        InvokeRepeating("UpdateWaypointGraph", 0f, 1f);
+        InvokeRepeating("UpdateWaypointGraph", 0f, 3f);
     }
 
     void Update() {

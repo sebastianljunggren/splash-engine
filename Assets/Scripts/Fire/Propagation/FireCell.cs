@@ -16,6 +16,10 @@ public class FireCell : MonoBehaviour {
     private int flammableHp;
     private int fireHp;
 
+    public bool IsBurning {
+        get { return isBurning; }
+    }
+
     void Start() {
         transform.localScale = new Vector3(parent.cellSize, parent.cellSize, parent.cellSize);
     }

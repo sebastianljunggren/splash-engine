@@ -15,6 +15,7 @@ public class FluidBehaviour : MonoBehaviour {
     private const float NEIGHBOUR_DISTANCE = LAYER_OFFSET;
 	private const float PARTICLE_ELASTICITY = 0.1f;
     private const int SOLVER_ITERATIONS = 4;
+    private System.Random random = new System.Random();
 
 	public FluidBehaviour() {
 		this.Particles = new List<FluidParticle>();
@@ -192,7 +193,8 @@ public class FluidBehaviour : MonoBehaviour {
 		foreach(Vector3 v in ParticleShot) {
             FluidParticle p = new FluidParticle(
 				transform.TransformPoint(v),
-				transform.forward / 2);
+				transform.forward / 2,
+                random);
 			NewParticles.Add(p);
 		}
 	}
@@ -201,7 +203,8 @@ public class FluidBehaviour : MonoBehaviour {
     {
         FluidParticle p = new FluidParticle(
             transform.TransformPoint(Vector3.zero),
-            transform.forward / 2);
+            transform.forward / 2,
+            random);
         NewParticles.Add(p);
     }
 }

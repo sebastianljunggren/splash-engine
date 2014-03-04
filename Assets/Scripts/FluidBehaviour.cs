@@ -124,7 +124,7 @@ public class FluidBehaviour : MonoBehaviour {
                 deltaPos[i] = Vector3.zero;
                 foreach (FluidParticle neigbour in foundNeighbours)
                 {
-                    deltaPos[i] += (lambdas[i] + lambdas[neigbour.Index]) * Vector3.Normalize(p.PredictedPosition - neigbour.PredictedPosition) * SpikyDerivative(p, neigbour);
+                    deltaPos[i] += (lambdas[i] + lambdas[neigbour.Index]) * Vector3.Normalize(p.PredictedPosition - neigbour.Position) * SpikyDerivative(p, neigbour);
                 }
                 deltaPos[i] = 1 / REST_DENSITY * deltaPos[i] ;
                 Vector3 newPosition = p.PredictedPosition + deltaPos[i];

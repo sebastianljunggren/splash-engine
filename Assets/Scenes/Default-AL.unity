@@ -1230,6 +1230,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2300002, guid: 5b2c96ce2d9926f4b857bf8135ff47b0, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 5b2c96ce2d9926f4b857bf8135ff47b0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1349,7 +1353,7 @@ Prefab:
     - target: {fileID: 2300002, guid: 5b2c96ce2d9926f4b857bf8135ff47b0, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 0fde99734c4da9940ba2240ec9bb12a0, type: 2}
+      objectReference: {fileID: 2100000, guid: 0e83ab4bf3032a44cad1084a80fc7033, type: 2}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 5b2c96ce2d9926f4b857bf8135ff47b0, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 5b2c96ce2d9926f4b857bf8135ff47b0, type: 3}
@@ -1804,7 +1808,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 0fde99734c4da9940ba2240ec9bb12a0, type: 2}
+  - {fileID: 2100000, guid: 0e83ab4bf3032a44cad1084a80fc7033, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0

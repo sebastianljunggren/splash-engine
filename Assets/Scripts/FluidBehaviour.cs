@@ -6,14 +6,14 @@ public class FluidBehaviour : MonoBehaviour {
 	public List<FluidParticle> Particles;
     public List<FluidParticle> NewParticles;
 	private List<Vector3> ParticleShot;
-	private const float LAYER_OFFSET = 0.5f;
+	private const float LAYER_OFFSET = 0.25f;
 	private const float GRAVITY = 0.005f;
     private const int PARTICLE_DIAMETER_IN_SHOT = 5;
     private const float REST_DENSITY = 50f;
-    private const float RELAXATION_CONSTANT = 0.1f;
+    private const float RELAXATION_CONSTANT = 0.0005f;
 	private int ParticleCount = 0;
     private const float NEIGHBOUR_DISTANCE = LAYER_OFFSET;
-	private const float PARTICLE_ELASTICITY = 0.1f;
+	private const float PARTICLE_ELASTICITY = 0.001f;
     private const int SOLVER_ITERATIONS = 4;
     private System.Random random = new System.Random();
 

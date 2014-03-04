@@ -63,8 +63,9 @@ public class PathfindingBehaviour : MonoBehaviour {
 
         RoomReached(CurrentRoom);
 
-        if (Target.Equals(string.Empty)) {
+        if (Target.Equals(string.Empty) || currentWaypoints.Length <= 0) {
             IsBusy = false;
+            Target = string.Empty;
         }
 	}
 

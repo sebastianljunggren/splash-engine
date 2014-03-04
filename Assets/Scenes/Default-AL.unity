@@ -437,6 +437,14 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 0675cce4c08771b4b89d75f8c68b80f6, type: 2}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0675cce4c08771b4b89d75f8c68b80f6, type: 2}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0675cce4c08771b4b89d75f8c68b80f6, type: 2}
   m_RootGameObject: {fileID: 2130048845}
@@ -1338,6 +1346,10 @@ Prefab:
       propertyPath: m_LocalScale.y
       value: .862311184
       objectReference: {fileID: 0}
+    - target: {fileID: 2300002, guid: 5b2c96ce2d9926f4b857bf8135ff47b0, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0fde99734c4da9940ba2240ec9bb12a0, type: 2}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 5b2c96ce2d9926f4b857bf8135ff47b0, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 5b2c96ce2d9926f4b857bf8135ff47b0, type: 3}
@@ -1792,7 +1804,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 0fde99734c4da9940ba2240ec9bb12a0, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -1873,7 +1885,7 @@ GameObject:
   - 92: {fileID: 1441145985}
   - 124: {fileID: 1441145984}
   - 81: {fileID: 1441145983}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -1941,7 +1953,7 @@ Transform:
   m_PrefabInternal: {fileID: 337288020}
   m_GameObject: {fileID: 1441145982}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: .615118742, z: 0}
+  m_LocalPosition: {x: 0, y: .5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2130048846}
@@ -2410,7 +2422,7 @@ GameObject:
   - 114: {fileID: 2130048848}
   - 82: {fileID: 2130048847}
   - 114: {fileID: 2130048856}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}

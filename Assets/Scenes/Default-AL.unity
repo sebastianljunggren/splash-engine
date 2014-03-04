@@ -236,6 +236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0a876a7bd0a97e4c84fcf354fadbda7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Water: {fileID: 1411548525}
 --- !u!114 &164366329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,6 +381,10 @@ Prefab:
       propertyPath: m_Layer
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: dd1a6ee538e39b742aea65822c0709b1, type: 2}
+      propertyPath: Water
+      value: 
+      objectReference: {fileID: 1411548525}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dd1a6ee538e39b742aea65822c0709b1, type: 2}
   m_RootGameObject: {fileID: 164366326}
@@ -688,6 +693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0a876a7bd0a97e4c84fcf354fadbda7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Water: {fileID: 1411548525}
 --- !u!114 &709801869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -838,7 +844,7 @@ Transform:
   m_PrefabInternal: {fileID: 968709358}
   m_GameObject: {fileID: 825631229}
   m_LocalRotation: {x: -.707106888, y: 0, z: -0, w: .707106769}
-  m_LocalPosition: {x: -1.66893005e-06, y: .5, z: -4.09719515}
+  m_LocalPosition: {x: -1.66893005e-06, y: .5, z: -4.74738693}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 356459680}
@@ -854,7 +860,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FireCount: 0
-  IsDiscovered: 0
+  IsDiscovered: 1
   agentManager: {fileID: 1967862781}
 --- !u!65 &825631234
 BoxCollider:
@@ -880,7 +886,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireCell: {fileID: 11400000, guid: 34cbb23ae5e136f4f8d6d217a814417d, type: 2}
-  fullFlammableHp: 100
+  fullFlammableHp: 150
   fullFireHp: 80
   cellSize: .300000012
   radius: .600000024
@@ -910,7 +916,7 @@ AudioListener:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 858118760}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!92 &858118762
 Behaviour:
   m_ObjectHideFlags: 0
@@ -1011,6 +1017,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0a876a7bd0a97e4c84fcf354fadbda7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Water: {fileID: 1411548525}
 --- !u!114 &890724725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1132,7 +1139,7 @@ Transform:
   m_GameObject: {fileID: 914029322}
   m_LocalRotation: {x: -.707106888, y: 0, z: -0, w: .707106769}
   m_LocalPosition: {x: 5.2563529, y: .5, z: 4.12044621}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: .925818086, y: .862564027, z: 1}
   m_Children: []
   m_Father: {fileID: 356459680}
 --- !u!23 &914029324
@@ -1203,8 +1210,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireCell: {fileID: 11400000, guid: 34cbb23ae5e136f4f8d6d217a814417d, type: 2}
-  fullFlammableHp: 100
-  fullFireHp: 80
+  fullFlammableHp: 150
+  fullFireHp: 40
   cellSize: .300000012
   radius: .600000024
   ignite: 1
@@ -1299,6 +1306,38 @@ Prefab:
       propertyPath: m_Layer
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 5b2c96ce2d9926f4b857bf8135ff47b0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.74738693
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: 5b2c96ce2d9926f4b857bf8135ff47b0, type: 3}
+      propertyPath: m_LocalScale.y
+      value: .875010669
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: 5b2c96ce2d9926f4b857bf8135ff47b0, type: 3}
+      propertyPath: m_LocalScale.z
+      value: .773259282
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: 5b2c96ce2d9926f4b857bf8135ff47b0, type: 3}
+      propertyPath: m_LocalScale.x
+      value: .814699769
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: 5b2c96ce2d9926f4b857bf8135ff47b0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.40418291
+      objectReference: {fileID: 0}
+    - target: {fileID: 400008, guid: 5b2c96ce2d9926f4b857bf8135ff47b0, type: 3}
+      propertyPath: m_LocalScale.y
+      value: .862564027
+      objectReference: {fileID: 0}
+    - target: {fileID: 400008, guid: 5b2c96ce2d9926f4b857bf8135ff47b0, type: 3}
+      propertyPath: m_LocalScale.x
+      value: .925818086
+      objectReference: {fileID: 0}
+    - target: {fileID: 400010, guid: 5b2c96ce2d9926f4b857bf8135ff47b0, type: 3}
+      propertyPath: m_LocalScale.y
+      value: .862311184
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 5b2c96ce2d9926f4b857bf8135ff47b0, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 5b2c96ce2d9926f4b857bf8135ff47b0, type: 3}
@@ -1356,6 +1395,10 @@ Prefab:
       propertyPath: m_Layer
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: dd1a6ee538e39b742aea65822c0709b1, type: 2}
+      propertyPath: Water
+      value: 
+      objectReference: {fileID: 1411548525}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dd1a6ee538e39b742aea65822c0709b1, type: 2}
   m_RootGameObject: {fileID: 890724722}
@@ -1389,7 +1432,7 @@ Transform:
   m_GameObject: {fileID: 1120103876}
   m_LocalRotation: {x: -.707106888, y: 0, z: -0, w: .707106769}
   m_LocalPosition: {x: 7.15255737e-07, y: .5, z: 11.7208252}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: .862311184, z: 1}
   m_Children: []
   m_Father: {fileID: 356459680}
 --- !u!23 &1120103878
@@ -1434,7 +1477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FireCount: 0
-  IsDiscovered: 0
+  IsDiscovered: 1
   agentManager: {fileID: 1967862781}
 --- !u!65 &1120103881
 BoxCollider:
@@ -1460,8 +1503,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireCell: {fileID: 11400000, guid: 34cbb23ae5e136f4f8d6d217a814417d, type: 2}
-  fullFlammableHp: 100
-  fullFireHp: 80
+  fullFlammableHp: 150
+  fullFireHp: 40
   cellSize: .300000012
   radius: .600000024
   ignite: 1
@@ -1636,6 +1679,10 @@ Prefab:
       propertyPath: m_Layer
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: dd1a6ee538e39b742aea65822c0709b1, type: 2}
+      propertyPath: Water
+      value: 
+      objectReference: {fileID: 1411548525}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dd1a6ee538e39b742aea65822c0709b1, type: 2}
   m_RootGameObject: {fileID: 709801866}
@@ -1915,7 +1962,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: dd1a6ee538e39b742aea65822c0709b1, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -4.84572315
+      value: 11.3738232
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: dd1a6ee538e39b742aea65822c0709b1, type: 2}
       propertyPath: m_LocalRotation.x
@@ -1949,6 +1996,10 @@ Prefab:
       propertyPath: m_Layer
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: dd1a6ee538e39b742aea65822c0709b1, type: 2}
+      propertyPath: Water
+      value: 
+      objectReference: {fileID: 1411548525}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dd1a6ee538e39b742aea65822c0709b1, type: 2}
   m_RootGameObject: {fileID: 1627398412}
@@ -1983,7 +2034,7 @@ Transform:
   m_PrefabInternal: {fileID: 1605032615}
   m_GameObject: {fileID: 1627398412}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.0149927735, y: 1, z: -4.84572315}
+  m_LocalPosition: {x: -.0149927735, y: 1, z: 11.3738232}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1217535257}
@@ -2077,6 +2128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0a876a7bd0a97e4c84fcf354fadbda7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Water: {fileID: 1411548525}
 --- !u!54 &1627398421
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2178,8 +2230,8 @@ Transform:
   m_PrefabInternal: {fileID: 968709358}
   m_GameObject: {fileID: 1767451262}
   m_LocalRotation: {x: -.707106888, y: 0, z: -0, w: .707106769}
-  m_LocalPosition: {x: -3.05097628, y: .5, z: 4.12045002}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -3.40418291, y: .5, z: 4.12045002}
+  m_LocalScale: {x: .814699769, y: .875010669, z: .773259282}
   m_Children: []
   m_Father: {fileID: 356459680}
 --- !u!23 &1767451264
@@ -2250,8 +2302,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireCell: {fileID: 11400000, guid: 34cbb23ae5e136f4f8d6d217a814417d, type: 2}
-  fullFlammableHp: 100
-  fullFireHp: 80
+  fullFlammableHp: 150
+  fullFireHp: 40
   cellSize: .300000012
   radius: .600000024
   ignite: 1

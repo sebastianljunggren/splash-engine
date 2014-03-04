@@ -26,6 +26,8 @@ public class Flammable : MonoBehaviour {
 
             // Start a fire at a random position
             fireGrid[Random.Range(0, fireGrid.Count - 1)].StartFire();
+            fireGrid[Random.Range(0, fireGrid.Count - 1)].StartFire();
+            fireGrid[Random.Range(0, fireGrid.Count - 1)].StartFire();
         }
     }
 

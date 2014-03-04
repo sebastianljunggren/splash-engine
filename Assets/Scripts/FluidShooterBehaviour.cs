@@ -10,7 +10,7 @@ public class FluidShooterBehaviour : MonoBehaviour {
 		if (Input.GetButtonDown ("Fire1")) {
 			water.ShootFluidParticles(this.transform);
 		}
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetButton("Fire2"))
         {
             water.ShootFluidParticle(this.transform);
         }

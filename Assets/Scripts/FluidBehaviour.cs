@@ -9,7 +9,7 @@ public class FluidBehaviour : MonoBehaviour {
 	private const float LAYER_OFFSET = 0.25f;
 	private const float GRAVITY = 0.005f;
     private const int PARTICLE_DIAMETER_IN_SHOT = 5;
-    private const float REST_DENSITY = 100f;
+    private const float REST_DENSITY = 50f;
     private const float RELAXATION_CONSTANT = 0.001f;
 	private int ParticleCount = 0;
     private const float NEIGHBOUR_DISTANCE = LAYER_OFFSET;

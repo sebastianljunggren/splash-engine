@@ -9,8 +9,8 @@ public class FluidBehaviour : MonoBehaviour {
 	private const float LAYER_OFFSET = 0.25f;
 	private const float GRAVITY = 0.005f;
     private const int PARTICLE_DIAMETER_IN_SHOT = 5;
-    private const float REST_DENSITY = 50f;
-    private const float RELAXATION_CONSTANT = 0.001f;
+    private const float REST_DENSITY = 100f;
+    private const float RELAXATION_CONSTANT = 0.0002f;
 	private int ParticleCount = 0;
     private const float NEIGHBOUR_DISTANCE = LAYER_OFFSET;
 	private const float PARTICLE_ELASTICITY = 0.001f;
@@ -38,6 +38,11 @@ public class FluidBehaviour : MonoBehaviour {
         Vector3 center = new Vector3(0, 0, radius);
         // Create sphere shape for shot by removing points
        this.ParticleShot.RemoveAll(point => Vector3.Distance(point, center) > (radius + 0.1f * LAYER_OFFSET) );
+    }
+
+    void Start()
+    {
+        Screen.showCursor = false;
     }
 
 	void FixedUpdate () {
@@ -124,7 +129,7 @@ public class FluidBehaviour : MonoBehaviour {
                 deltaPos[i] = Vector3.zero;
                 foreach (FluidParticle neigbour in foundNeighbours)
                 {
-                    deltaPos[i] += (lambdas[i] + lambdas[neigbour.Index]) * Vector3.Normalize(p.PredictedPosition - neigbour.PredictedPosition) * SpikyDerivative(p, neigbour);
+                    deltaPos[i] += (lambdas[i] + lambdas[neigbour.Index]) * Vector3.Normalize(p.PredictedPosition - neigbour.Position) * SpikyDerivative(p, neigbour);
                 }
                 deltaPos[i] = 1 / REST_DENSITY * deltaPos[i] ;
                 Vector3 newPosition = p.PredictedPosition + deltaPos[i];

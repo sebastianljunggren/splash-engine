@@ -21,3 +21,6 @@
 *.app
 *.apk
 *.exe
+
+# Ignore Windows Thumbs files
+*.db

@@ -60,19 +60,35 @@ public class PathfindingBehaviour : MonoBehaviour {
             waypointIndex++;
             MoveTo(currentWaypoints[waypointIndex].position);
         }
-        
+
         RoomReached(CurrentRoom);
-        
-	}
 
-    public void RoomReached(string room) {
-        CurrentRoom = room;
-
-        if (room.Equals(Target)) {
-            TargetReached(this, Target);
+        if (Target.Equals(string.Empty) || currentWaypoints.Length <= 0) {
             IsBusy = false;
             Target = string.Empty;
         }
+	}
+
+    public void RoomReached(string room) {
+        
+        
+        
+
+        if (room.Equals(Target)) {
+            IsBusy = false;
+            Debug.Log(this.name + ": Target reached");
+
+            
+            if (!room.Equals(CurrentRoom)) {
+                Debug.Log(room + " vs " + CurrentRoom);
+                CurrentRoom = room;
+                TargetReached(this, Target);
+            }
+
+            Target = string.Empty;
+        }
+
+        CurrentRoom = room;
     }
 
     public void StartJourney(string objectName) {
@@ -81,6 +97,8 @@ public class PathfindingBehaviour : MonoBehaviour {
         // Set busy even if the agent is already there, is removed next frame.
         // Used when dividing the agents based on fire data.
         IsBusy = true;
+
+        Debug.Log("StartJourney");
 
         if (CurrentRoom != objectName) {
 

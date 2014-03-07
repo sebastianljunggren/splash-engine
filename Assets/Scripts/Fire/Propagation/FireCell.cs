@@ -77,7 +77,7 @@ public class FireCell : MonoBehaviour {
 
             if (!drawGizmos) {
                 // Spawn fire at the current position
-                //* Random.Range(0.8f, 1.2f)
+                // * Random.Range(0.95f, 1.05f)
                 fire = (FireBehaviour)Instantiate(firePrefab, transform.position, Quaternion.identity);
                 fire.transform.parent = transform;
             }

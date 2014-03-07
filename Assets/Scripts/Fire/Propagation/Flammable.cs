@@ -25,7 +25,14 @@ public class Flammable : MonoBehaviour {
             GenerateGrid();
 
             // Start a fire at a random position
-            fireGrid[Random.Range(0, fireGrid.Count - 1)].StartFire();
+            while (true) {
+                FireCell cell = fireGrid[Random.Range(0, fireGrid.Count - 1)];
+
+                if (cell.active) {
+                    cell.StartFire();
+                    break;
+                }
+            }
         }
     }
 
@@ -50,6 +57,7 @@ public class Flammable : MonoBehaviour {
         Bounds meshBounds = transform.collider.bounds;
         Vector3 min = meshBounds.min;
         Vector3 max = meshBounds.max;
+        int i = 0;
 
         for (float x = min.x; x <= max.x; x = x + cellSize) {
             for (float y = min.y; y <= max.y; y = y + cellSize) {
@@ -60,6 +68,11 @@ public class Flammable : MonoBehaviour {
                         FireCell cell = (FireCell) Instantiate(fireCell, pos, transform.rotation);
                         cell.Instantiate(this);
                         fireGrid.Add(cell);
+
+                        i++;
+                        if (i % 2 == 0) {
+                            //cell.active = false;
+                        }
                     }
                 }
             }

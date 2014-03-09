@@ -7,13 +7,13 @@ public class FluidBehaviour : MonoBehaviour
     public List<FluidParticle> Particles { get; set; }
     private List<FluidParticle> newParticles;
     private List<Vector3> particleShot;
-    private const float ParticleDistance = 0.25f;
+    private const float ParticleDiameter = 0.25f;
     private readonly Vector3 Gravity = new Vector3(0, 0.005f, 0);
     private const int ShotParticleDiameter = 5;
-    private const float RestDensity = 100f;
-    private const float RelaxationConstant = 0.0002f;
+    private const float RestDensity = 50f;
+    private const float RelaxationConstant = 0.00004f;
     private int particleCount = 0;
-    private const float NeighbourDistance = ParticleDistance;
+    private const float NeighbourDistance = ParticleDiameter * 0.75f;
     private const float ParticleElasticity = 0.001f;
     private const int SolverIterations = 4;
     private System.Random random = new System.Random();
@@ -25,7 +25,7 @@ public class FluidBehaviour : MonoBehaviour
         this.Particles = new List<FluidParticle>();
         this.newParticles = new List<FluidParticle>();
         this.particleShot = new List<Vector3>();
-        float radius = 0.5f * ParticleDistance * ShotParticleDiameter;
+        float radius = 0.5f * ParticleDiameter * ShotParticleDiameter;
         //  Create cube with points
         for (int x = 0; x < ShotParticleDiameter; x++)
         {
@@ -33,7 +33,7 @@ public class FluidBehaviour : MonoBehaviour
             {
                 for (int z = 0; z < ShotParticleDiameter; z++)
                 {
-                    Vector3 v = new Vector3(x * ParticleDistance - radius, y * ParticleDistance - radius, z * ParticleDistance);
+                    Vector3 v = new Vector3(x * ParticleDiameter - radius, y * ParticleDiameter - radius, z * ParticleDiameter);
                     this.particleShot.Add(v);
                 }
 
@@ -41,7 +41,7 @@ public class FluidBehaviour : MonoBehaviour
         }
         Vector3 center = new Vector3(0, 0, radius);
         // Create sphere shape for shot by removing points
-        this.particleShot.RemoveAll(point => Vector3.Distance(point, center) > (radius + 0.1f * ParticleDistance));
+        this.particleShot.RemoveAll(point => Vector3.Distance(point, center) > (radius + 0.1f * ParticleDiameter));
     }
 
     void Start()
@@ -81,7 +81,7 @@ public class FluidBehaviour : MonoBehaviour
 
             Vector3 newPosition = p.Position + p.Velocity;
             RaycastHit hit = new RaycastHit();
-            if (Physics.Linecast(p.Position, newPosition + ParticleDistance * (newPosition - p.Position).normalized, out hit))
+            if (Physics.Linecast(p.Position, newPosition + ParticleDiameter * (newPosition - p.Position).normalized, out hit))
             {
                 if (hit.normal.y != 0)
                 {
@@ -150,7 +150,7 @@ public class FluidBehaviour : MonoBehaviour
                 }
                 deltaPos[i] = 1 / RestDensity * deltaPos[i];
                 Vector3 newPosition = p.PredictedPosition + deltaPos[i];
-                if (Physics.Linecast(p.PredictedPosition, newPosition + ParticleDistance * (newPosition - p.Position).normalized))
+                if (Physics.Linecast(p.PredictedPosition, newPosition + ParticleDiameter * (newPosition - p.Position).normalized))
                 {
                     deltaPos[i] = Vector3.zero;
                 }
@@ -211,7 +211,7 @@ public class FluidBehaviour : MonoBehaviour
         Gizmos.color = Color.red;
         foreach (FluidParticle p in Particles)
         {
-            Gizmos.DrawSphere(p.Position, ParticleDistance / 2);
+            Gizmos.DrawSphere(p.Position, ParticleDiameter / 2);
         }
     }
 

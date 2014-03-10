@@ -20,6 +20,8 @@ The code for this extension is located in `Assets/Scripts/Fluid`. There is a pre
 
 ## Fluid graphics
 
+The graphics part of the fluid simulation is not a complete experiance, but a rendertarget containing a blurred version the depth for the fluid particles are blitted to the top left corner. From this, normals were to be calculated for each fragment and with that, lighting equation could be applied to render a smooth surface based on the screen spaced information.
+
 ## Fire
 
 The visual representation is in the FirePrefab_no_smoke

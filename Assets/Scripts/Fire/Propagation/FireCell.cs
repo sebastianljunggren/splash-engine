@@ -25,13 +25,7 @@ public class FireCell : MonoBehaviour {
     }
 
     void Update() {
-        //transform.LookAt(parent.transform.forward);
-        //Debug.DrawRay(transform.position, -transform.forward, Color.green);
-        
-        //Vector3[] normals = parent.GetComponent<MeshFilter>().mesh.normals;
-        //foreach (Vector3 normal in normals) {
-        //    Debug.DrawRay(transform.position, normal, Color.green);
-        //}
+
     }
 
     public void Instantiate(Flammable parent) {
@@ -133,23 +127,6 @@ public class FireCell : MonoBehaviour {
                     }
                 }
             }
-
-            //Debug.Log("Burning");
-
-            //RaycastHit hit;
-            //if (Physics.Raycast(transform.position, transform.forward, out hit)) {
-            //    Flammable flammable = hit.collider.gameObject.GetComponent<Flammable>();
-            //    FireCell cell = hit.collider.gameObject.GetComponent<FireCell>();
-
-            //    if (cell != null) {
-            //        Debug.Log("Hit cell");
-            //        cell.FireDamage();
-            //    }
-            //    else if (flammable != null) {
-            //        Debug.Log("Hit flammable");
-            //        flammable.RespondToFire();
-            //    }
-            //}
         }
     }
 
@@ -172,20 +149,6 @@ public class FireCell : MonoBehaviour {
             }
         }
     }
-
-    //private IEnumerable CloseObjects() {
-    //    // Get all surrounding objects
-    //    Collider[] closeObjects = Physics.OverlapSphere(
-    //        transform.position * Random.Range(0.6f, 1.3f),
-    //        parent.radius * Random.Range(0.2f, 1.0f));
-
-    //    foreach (Collider col in closeObjects) {
-    //        // Check if it collides with itself
-    //        if (col.collider != transform.collider && col.collider != parent.collider) {
-    //            yield return col;
-    //        }
-    //    }
-    //}
 
     void OnDrawGizmos() {
         if (isBurning) {

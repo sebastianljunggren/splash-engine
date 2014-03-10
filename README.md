@@ -30,3 +30,7 @@ The error is a consequence of lists not currently being saved correctly which re
 ## Fire propagation
 
 ## Firefighter AI
+
+The code for this extension is located in `Assets/Scripts/WaypointGeneration` and in `Assets/Scripts/ArtificialIntel`. To be able to see the waypoint graph, gizmos are required. The scene `IntegratedAIWaterFire` is the only scene in the project with AI. The standard view is the one from the first-person player, but if you want you can activate the top-down camera by checking the checkbox on the game object called `TopDownCamera` in the hierarchy.
+
+The firefighters are quite fast in extinguish the fire at the moment so I would recommend starting with the top-down approach if you are interested in how the firefighters move and are controlled by the AI.

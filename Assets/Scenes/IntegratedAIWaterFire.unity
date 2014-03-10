@@ -912,7 +912,7 @@ GameObject:
   - 92: {fileID: 858118762}
   - 81: {fileID: 858118761}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: TopDownCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1978,7 +1978,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: dd1a6ee538e39b742aea65822c0709b1, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 11.3738232
+      value: -1.87584555
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: dd1a6ee538e39b742aea65822c0709b1, type: 2}
       propertyPath: m_LocalRotation.x
@@ -2050,7 +2050,7 @@ Transform:
   m_PrefabInternal: {fileID: 1605032615}
   m_GameObject: {fileID: 1627398412}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.0149927735, y: 1, z: 11.3738232}
+  m_LocalPosition: {x: -.0149927735, y: 1, z: -1.87584555}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1217535257}

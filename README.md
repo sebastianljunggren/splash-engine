@@ -21,6 +21,11 @@ The code for this extension is located in `Assets/Scripts/Fluid`. There is a pre
 ## Fluid graphics
 
 ## Fire
+The visual representation is in the FirePrefab_no_smoke
+In the scene called Mathias, the splitting of meshes can be tested.
+To split the mesh of the quad in the scene press 'space', this can be done several times
+To remove triangles within the mesh press 'return', this can only be done once before you get an error.
+The error is a consequence of lists not currently being saved correctly which results in outofbounds.
 
 ## Fire propagation
 

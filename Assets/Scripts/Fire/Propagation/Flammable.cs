@@ -54,10 +54,9 @@ public class Flammable : MonoBehaviour {
     }
 
     private void GenerateGrid() {
-        Bounds meshBounds = transform.collider.bounds;
-        Vector3 min = meshBounds.min;
-        Vector3 max = meshBounds.max;
-        int i = 0;
+        Bounds bounds = transform.collider.bounds;
+        Vector3 min = bounds.min;
+        Vector3 max = bounds.max;
 
         for (float x = min.x; x <= max.x; x = x + cellSize) {
             for (float y = min.y; y <= max.y; y = y + cellSize) {
@@ -68,11 +67,6 @@ public class Flammable : MonoBehaviour {
                         FireCell cell = (FireCell) Instantiate(fireCell, pos, transform.rotation);
                         cell.Instantiate(this);
                         fireGrid.Add(cell);
-
-                        i++;
-                        if (i % 2 == 0) {
-                            //cell.active = false;
-                        }
                     }
                 }
             }

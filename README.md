@@ -21,6 +21,7 @@ The code for this extension is located in `Assets/Scripts/Fluid`. There is a pre
 ## Fluid graphics
 
 ## Fire
+
 The visual representation is in the FirePrefab_no_smoke
 In the scene called Mathias, the splitting of meshes can be tested.
 To split the mesh of the quad in the scene press 'space', this can be done several times
@@ -28,6 +29,9 @@ To remove triangles within the mesh press 'return', this can only be done once b
 The error is a consequence of lists not currently being saved correctly which results in outofbounds.
 
 ## Fire propagation
+
+The scene FireSpread shows the fire propagation.
+In the script FireCell, Gizmos can be enabled or disabled by changing the value of the variable drawGizmos. Enabling gizmos will prevent the fire prefab from being instantiated.
 
 ## Firefighter AI
 

@@ -65,7 +65,7 @@ public class AgentBehaviour : MonoBehaviour {
 
                     if (currentTarget != null) {
                         transform.LookAt(currentTarget.transform);
-                        Water.ShootFluidParticle(this.transform);
+                        //Water.ShootFluidParticle(this.transform);
                         Water.ShootFluidParticle(this.transform);
                     }
                 }

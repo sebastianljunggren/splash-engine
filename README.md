@@ -16,6 +16,8 @@ The project consists of several scenes, scripts and prefabs located in subfolder
 
 The fluid simulation is currently displayed using Unity's gizmos. Therefore gizmos need to be enabled to see them. The scene `FluidTest` is a good scene to start experimenting with the fluids in. Water particles can be fired in a sphere by left clicking and by holding the right mouse button a stream can be fired. It may be desirable to set `RemoveExpiredParticles` to `false` in `FluidBehaviour` while testing the fluid simulation. 
 
+The code for this extension is located in `Assets/Scripts/Fluid`. There is a prefab available in the `Assets/Prefabs`-folder.
+
 ## Fluid graphics
 
 ## Fire

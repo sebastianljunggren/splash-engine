@@ -55,8 +55,6 @@ public class FireCell : MonoBehaviour {
         if (active && isBurning) {
             fireHp -= damage;
 
-            // TODO: Decrease fire intensity
-
             if (fireHp <= 0) {
                 ExtinguishFire();
             }
@@ -94,7 +92,6 @@ public class FireCell : MonoBehaviour {
             // Deactivate cell so it cannot ignite again
             active = false;
 
-            // TODO: Fine a better solution for this
             fire.active = false;
 
             // Remove event method
@@ -104,8 +101,6 @@ public class FireCell : MonoBehaviour {
 
     public void Burning() {
         if (active) {
-            // TODO: Increase fire intensity
-
             // Get all surrounding objects
             Collider[] closeObjects = Physics.OverlapSphere(
                 transform.position * Random.Range(0.6f, 1.3f),

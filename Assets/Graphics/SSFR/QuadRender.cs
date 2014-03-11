@@ -15,9 +15,9 @@ public class QuadRender : MonoBehaviour {
 		{
 			Graphics.DrawMesh(filter.mesh, particle.Position,
 				                  mainCam.transform.rotation,
-				                  filter.renderer.material, 0);
+				                  filter.renderer.materials[0], 
+			                  LayerMask.NameToLayer("WaterParticlesDepth"));
+			Graphics.DrawMesh(filter.mesh, particle.Position, mainCam.transform.rotation, filter.renderer.materials[1], 0);
 		}
 	}
-
-
 }
